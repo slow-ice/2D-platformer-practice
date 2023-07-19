@@ -1,0 +1,4 @@
+repository "2D platformer practice@slowice@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
