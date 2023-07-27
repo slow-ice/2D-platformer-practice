@@ -20,8 +20,8 @@ public class PlayerLandState : PlayerGroundState {
         base.Exit();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         if (changeToJump) {
             return;

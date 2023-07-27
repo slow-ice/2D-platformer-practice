@@ -47,8 +47,8 @@ public class PlayerEdgeState : PlayerState {
         }
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         xInput = player.InputHandler.xInput;
         yInput = player.InputHandler.yInput;

@@ -33,8 +33,8 @@ public class PlayerGroundState : PlayerState {
         base.Exit();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         xInput = player.InputHandler.xInput;
         jumpInput = player.InputHandler.JumpInput;
@@ -69,8 +69,8 @@ public class PlayerGroundState : PlayerState {
         }
     }
 
-    public override void PhysicsUpdate() {
-        base.PhysicsUpdate();
+    public override void OnFixedUpdate() {
+        base.OnFixedUpdate();
     }
 }
 

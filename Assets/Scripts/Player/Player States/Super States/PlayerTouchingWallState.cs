@@ -22,8 +22,8 @@ public class PlayerTouchingWallState : PlayerState {
         base.Enter();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         xInput = player.InputHandler.xInput;
         jumpInput = player.InputHandler.JumpInput;

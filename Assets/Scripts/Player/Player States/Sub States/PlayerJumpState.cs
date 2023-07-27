@@ -22,8 +22,8 @@ public class PlayerJumpState : PlayerAbilityState {
         isAbilityDone = true;
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
     }
 
     public bool CanJump => amountOfJumpLeft > 0;

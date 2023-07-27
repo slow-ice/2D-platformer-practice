@@ -19,7 +19,7 @@ public class PlayerAttackState : PlayerAbilityState {
         base.Exit();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
     }
 }

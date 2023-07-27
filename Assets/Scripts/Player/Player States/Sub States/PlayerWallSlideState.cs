@@ -13,8 +13,8 @@ public class PlayerWallSlideState : PlayerTouchingWallState {
         base.Enter();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         player.SetVelocityY(-playerData.wallSlideSpeed);
 

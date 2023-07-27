@@ -18,8 +18,8 @@ public class PlayerMoveState : PlayerGroundState {
         base.Exit();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         if (changeToJump) {
             return;
@@ -33,7 +33,7 @@ public class PlayerMoveState : PlayerGroundState {
         }
     }
 
-    public override void PhysicsUpdate() {
-        base.PhysicsUpdate();
+    public override void OnFixedUpdate() {
+        base.OnFixedUpdate();
     }
 }

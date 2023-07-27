@@ -19,8 +19,8 @@ public class PlayerWallJumpState : PlayerAbilityState {
         isAbilityDone = true;
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
     }
 

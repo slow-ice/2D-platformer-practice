@@ -49,8 +49,8 @@ public class PlayerDashState : PlayerAbilityState {
         }
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         if (isAbilityDone) {
             return;
