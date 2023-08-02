@@ -4,13 +4,11 @@ using UnityEngine;
 namespace Assets.Scripts.Refactoring {
     public interface IFSMMachine<TState> {
 
-        FSMState<TState> LastState { get; set; }
+        FSMState<TState> ActiveSubState { get; set; }
 
-        FSMState<TState> CurrentState { get; set; }
+        bool TryTransition(FSMTransition<TState> transition);
 
-        void TryTransition(TState stateName);
-
-        void ExecutTransition();
+        void ChangeState(TState state);
         
     }
 }

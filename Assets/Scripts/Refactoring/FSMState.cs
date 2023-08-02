@@ -10,18 +10,45 @@ namespace Assets.Scripts.Refactoring {
         // 父状态
         public FSMState<TState> mParentState;
 
+        public List<FSMTransition<TState>> mCurrentLayerTransitions;
+
 
         private Action<FSMState<TState>> mOnEnter;
         private Action<FSMState<TState>> mOnExit;
         private Action<FSMState<TState>> mOnUpdate;
         private Action<FSMState<TState>> mOnFixedUpdate;
 
+
+        public FSMState(TState stateType) {
+            this.stateType = stateType;
+        }
+
+        public FSMState() {
+
+        }
+
         public virtual void OnInit() {
 
         }
 
+        public virtual void OnInit(Action<FSMState<TState>> enter, Action<FSMState<TState>> update, Action<FSMState<TState>> exit) {
+            mOnEnter = enter;
+            mOnUpdate = update;
+            mOnExit = exit;
+        }
+
+        /// <summary>
+        /// 添加状态转换
+        /// </summary>
+        /// <param name="transition"></param>
+        public virtual void AddTransition(FSMTransition<TState> transition) {
+            mCurrentLayerTransitions = mCurrentLayerTransitions ?? new List<FSMTransition<TState>>();
+            mCurrentLayerTransitions.Add(transition);
+        }
+
         public virtual void OnEnter() {
             mOnEnter?.Invoke(this);
+            Debug.Log("Enter State: " + this.stateType);
         }
 
         public virtual void OnExit() {

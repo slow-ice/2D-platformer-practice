@@ -22,5 +22,7 @@ namespace Assets.Scripts.Refactoring {
         }
     }
 
-    public enum PlayerStates { }
+    public enum PlayerStates { 
+        normal, move, idle, walk, run
+    }
 }
