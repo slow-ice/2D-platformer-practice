@@ -49,4 +49,8 @@ namespace Assets.Scripts.Refactoring {
             return EqualityComparer<TState>.Default.Equals(fromState, toState);
         }
     }
+
+    public class FSMTransition : FSMTransition<string> {
+        public FSMTransition(string fromState, string toState) : base(fromState, toState) { }
+    }
 }

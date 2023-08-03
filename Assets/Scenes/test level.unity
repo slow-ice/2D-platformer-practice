@@ -7088,7 +7088,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ab4eb479ad7417418377b55fa46757e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list: []
+  eInput: 0
+  wInput: 0
+  state: 
 --- !u!4 &1306212271
 Transform:
   m_ObjectHideFlags: 0

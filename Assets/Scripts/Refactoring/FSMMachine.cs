@@ -17,7 +17,7 @@ namespace Assets.Scripts.Refactoring {
 
         private static readonly List<FSMTransition<TState>> noTransitions = new List<FSMTransition<TState>>(0);
 
-        public bool IsRootMachine { get { return mParentState == null; } set { mParentState = null; }  }
+        public bool IsRootMachine = false;
 
 
 
@@ -36,7 +36,6 @@ namespace Assets.Scripts.Refactoring {
         public override void AddTransition(FSMTransition<TState> transition) {
             if (mAllSubStates.TryGetValue(transition.FromState, out var state)) {
                 state.AddTransition(transition);
-                base.AddTransition(transition);
             }
             else {
                 base.AddTransition(transition);
@@ -67,7 +66,11 @@ namespace Assets.Scripts.Refactoring {
         /// </summary>     
         private void CheckTransition() {
             // 在激活状态的转换列表中寻找第一个合法的转换
-            mSubLayerTransitions.First(trans => TryTransition(trans));
+            foreach (var transition in mSubLayerTransitions) {
+                if (TryTransition(transition)) {
+                    break;
+                }
+            }
         }
 
 
@@ -98,8 +101,6 @@ namespace Assets.Scripts.Refactoring {
             mSubLayerTransitions = newState.mCurrentLayerTransitions ?? noTransitions;
             ActiveSubState = newState;
 
-            Debug.Log("Transition to active sub state: " + ActiveSubState.stateType);
-
             ActiveSubState.OnEnter();
         }
 
@@ -112,7 +113,9 @@ namespace Assets.Scripts.Refactoring {
                 Debug.LogError("No default state.");
             }
 
-            ChangeState(DefaultSubState.stateType);
+            if (ActiveSubState == null) {
+                ChangeState(DefaultSubState.stateType);
+            }
         }
 
         public override void OnUpdate() {
@@ -121,7 +124,6 @@ namespace Assets.Scripts.Refactoring {
             CheckTransition();
 
             ActiveSubState.OnUpdate();
-            Debug.Log("Current active state: " + this.stateType);
         }
 
         public override void OnFixedUpdate() {
@@ -133,9 +135,16 @@ namespace Assets.Scripts.Refactoring {
         public override void OnExit() {
             base.OnExit();
 
-            ActiveSubState?.OnExit();
+            if (ActiveSubState != null) {
+                ActiveSubState.OnExit();
+                ActiveSubState = null;
+            }
         }
     }
 
+    public class FSMMachine : FSMMachine<string> {
+        public FSMMachine() {
 
+        }
+    }
 }

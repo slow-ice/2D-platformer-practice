@@ -23,9 +23,7 @@ namespace Assets.Scripts.Refactoring {
             this.stateType = stateType;
         }
 
-        public FSMState() {
-
-        }
+        public FSMState() { }
 
         public virtual void OnInit() {
 
@@ -48,7 +46,6 @@ namespace Assets.Scripts.Refactoring {
 
         public virtual void OnEnter() {
             mOnEnter?.Invoke(this);
-            Debug.Log("Enter State: " + this.stateType);
         }
 
         public virtual void OnExit() {
@@ -62,5 +59,9 @@ namespace Assets.Scripts.Refactoring {
         public virtual void OnUpdate() {
             mOnUpdate?.Invoke(this);
         }
+    }
+
+    public class FSMState : FSMState<string> {
+        public FSMState(string state) : base(state) { }
     }
 }

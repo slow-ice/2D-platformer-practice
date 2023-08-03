@@ -4,24 +4,26 @@ using UnityEngine;
 namespace Assets.Scripts.Refactoring {
     public class TestHFSM : MonoBehaviour {
 
-        FSMMachine<string> RootFSM;
+        FSMMachine RootFSM;
 
         public bool eInput = false;
         public bool wInput = false;
+
+        private bool firstChange = true;
 
         public string state;
 
         // Use this for initialization
         void Start() {
-            RootFSM = new FSMMachine<string> ();
+            RootFSM = new FSMMachine();
             RootFSM.IsRootMachine = true;
 
-            var idleState = new FSMState<string>("idle");
-            var walkState = new FSMState<string> ("walk");
-            var runState = new FSMState<string>("run");
+            var idleState = new FSMState("idle");
+            var walkState = new FSMState("walk");
+            var runState = new FSMState("run");
 
-            var normalSubMachine = new FSMMachine<string>();
-            var moveSubMachine = new FSMMachine<string>();
+            var normalSubMachine = new FSMMachine();
+            var moveSubMachine = new FSMMachine();
 
             idleState.OnInit(enter => Debug.Log("enter idle"), update => Debug.Log("update idle"),
                 exit => Debug.Log("exit idle"));
@@ -49,16 +51,16 @@ namespace Assets.Scripts.Refactoring {
             RootFSM.AddState("normal", normalSubMachine);
             RootFSM.AddState("move", moveSubMachine);
 
-            var trans1 = new FSMTransition<string>("run", "walk");
+            var trans1 = new FSMTransition("run", "walk");
             trans1.AddCondition(() => !eInput);
 
-            var trans2 = new FSMTransition<string>("walk", "run");
+            var trans2 = new FSMTransition("walk", "run");
             trans2.AddCondition(() => eInput);
 
-            var trans3 = new FSMTransition<string>("normal", "move");
+            var trans3 = new FSMTransition("normal", "move");
             trans3.AddCondition(() => wInput);
 
-            var trans4 = new FSMTransition<string>("move", "normal");
+            var trans4 = new FSMTransition("move", "normal");
             trans4.AddCondition(() => !wInput);
 
             RootFSM.AddTransition(trans3);
@@ -80,6 +82,12 @@ namespace Assets.Scripts.Refactoring {
             }
 
             RootFSM.OnUpdate();
+
+            if (firstChange) {
+                wInput = true;
+                eInput = true;
+                firstChange = false;
+            }
 
             state = RootFSM.ActiveSubState.stateType;
         }
