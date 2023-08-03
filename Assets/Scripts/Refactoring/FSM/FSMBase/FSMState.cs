@@ -39,9 +39,10 @@ namespace Assets.Scripts.Refactoring {
         /// 添加状态转换
         /// </summary>
         /// <param name="transition"></param>
-        public virtual void AddTransition(FSMTransition<TState> transition) {
+        public virtual FSMTransition<TState> AddTransition(FSMTransition<TState> transition) {
             mCurrentLayerTransitions = mCurrentLayerTransitions ?? new List<FSMTransition<TState>>();
             mCurrentLayerTransitions.Add(transition);
+            return transition;
         }
 
         public virtual void OnEnter() {

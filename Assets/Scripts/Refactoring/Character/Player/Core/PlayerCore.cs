@@ -6,8 +6,14 @@ using UnityEngine;
 
 public class PlayerCore : IController
 {
-    
-    public PlayerCore InitCore() {
+    private Transform mPlayerTrans;
+    private Animator mAnimator;
+    private Rigidbody2D mRigidbody;
+
+    public PlayerCore InitCore(Transform player) {
+        mPlayerTrans = player;
+        mAnimator = player.GetComponent<Animator>();
+        mRigidbody = player.GetComponent<Rigidbody2D>();
         return this;
     }
 

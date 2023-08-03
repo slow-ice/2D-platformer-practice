@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Singleton<T>, new()
 {
-    private T instance;
+    private static T instance;
 
-    public T Instance {
+    public static T Instance {
         get {
             if (instance == null) {
                 instance = (T)this;
