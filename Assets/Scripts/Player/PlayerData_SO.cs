@@ -9,6 +9,7 @@ public class PlayerData_SO : ScriptableObject
     public float movementSpeed = 8f;
 
     [Header("Jump Params")]
+    public int amountOfJump = 2;
     public float jumpForce = 8f;
     public float jumpPressedWindow = 0.5f;
     public int fallGravityScale;

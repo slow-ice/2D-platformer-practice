@@ -61,26 +61,26 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
             inputActions.Player.Dash.canceled += OnDashButtonUp;
             inputActions.Player.DashDirection.performed += OnDirectionInput;
 
-            inputActions.Player.PrimaryAttack.started += OnPrimaryAttackInput;
-            inputActions.Player.PrimaryAttack.canceled += ResetPrimaryAttack;
-            inputActions.Player.SecondAttack.started += OnSecondAttackInput;
-            inputActions.Player.SecondAttack.canceled += ResetSecondAttack;
+            //inputActions.Player.PrimaryAttack.started += OnPrimaryAttackInput;
+            //inputActions.Player.PrimaryAttack.canceled += ResetPrimaryAttack;
+            //inputActions.Player.SecondAttack.started += OnSecondAttackInput;
+            //inputActions.Player.SecondAttack.canceled += ResetSecondAttack;
 
             inputActions.Enable();
         }
 
-        private void ResetSecondAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
-            AttackInputs[(int)CombatInputs.Secondary] = false;
+        //private void ResetSecondAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        //    AttackInputs[(int)CombatInputs.Secondary] = false;
 
-        private void OnSecondAttackInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
-            AttackInputs[(int)CombatInputs.Secondary] = true;
+        //private void OnSecondAttackInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        //    AttackInputs[(int)CombatInputs.Secondary] = true;
 
 
-        private void ResetPrimaryAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
-            AttackInputs[(int)CombatInputs.Primary] = false;
+        //private void ResetPrimaryAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        //    AttackInputs[(int)CombatInputs.Primary] = false;
 
-        private void OnPrimaryAttackInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
-            AttackInputs[(int)CombatInputs.Primary] = true;
+        //private void OnPrimaryAttackInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        //    AttackInputs[(int)CombatInputs.Primary] = true;
 
 
         private void OnDashButtonUp(UnityEngine.InputSystem.InputAction.CallbackContext obj) {

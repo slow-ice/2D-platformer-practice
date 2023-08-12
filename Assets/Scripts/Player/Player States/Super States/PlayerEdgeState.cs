@@ -56,7 +56,7 @@ public class PlayerEdgeState : PlayerState {
 
         if (player.CheckAnimFinished("climbEdge")) {
             player.Animator.SetBool("climbEdge", false);
-            stateMachine.ChangeState(player.IdleState);
+            //stateMachine.ChangeState(player.IdleState);
             return;
         }
 

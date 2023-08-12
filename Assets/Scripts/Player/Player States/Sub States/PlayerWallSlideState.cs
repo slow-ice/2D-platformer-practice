@@ -35,7 +35,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState {
             return;
         }
         if (isGrounded) {
-            stateMachine.ChangeState(player.IdleState);
+            //stateMachine.ChangeState(player.IdleState);
             return;
         }
     }

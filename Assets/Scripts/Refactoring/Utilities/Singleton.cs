@@ -9,7 +9,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>, new()
     public static T Instance {
         get {
             if (instance == null) {
-                instance = (T)this;
+                Debug.LogError("No Instance");
             }
             return instance;
         }

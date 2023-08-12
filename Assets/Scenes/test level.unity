@@ -6998,6 +6998,53 @@ Transform:
   m_Father: {fileID: 1573581960}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &980699867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980699869}
+  - component: {fileID: 980699868}
+  m_Layer: 0
+  m_Name: Input System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &980699868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980699867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9b694bf3bfada4bbb1e2f918875559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpInputBuffer: 0.2
+  jumpHoldTime: 0
+  AttackInputs: 
+--- !u!4 &980699869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980699867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1060168862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7075,7 +7122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1306212270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7203,18 +7250,17 @@ GameObject:
   - component: {fileID: 1573581960}
   - component: {fileID: 1573581959}
   - component: {fileID: 1573581958}
-  - component: {fileID: 1573581965}
-  - component: {fileID: 1573581964}
   - component: {fileID: 1573581963}
   - component: {fileID: 1573581966}
   - component: {fileID: 1573581967}
+  - component: {fileID: 1573581968}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1573581958
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7333,39 +7379,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1573581964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573581957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f4ec78781d4aa24998b627f64b8403b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpInputBuffer: 0.2
-  jumpHoldTime: 0
-  AttackInputs: 
---- !u!114 &1573581965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573581957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7f2dee2a31217f4bb2f22aa18e0defa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerData: {fileID: 11400000, guid: f3f9527db0566744c98a026f44b8a34c, type: 2}
-  GroundCheck: {fileID: 729547490}
-  WallCheck: {fileID: 786344826}
-  EdgeCheck: {fileID: 874695752}
-  DashIndicator: {fileID: 1560331484}
-  amountOfJump: 1
 --- !u!50 &1573581966
 Rigidbody2D:
   serializedVersion: 4
@@ -7417,6 +7430,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1573581968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573581957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a9897c958baff4bbfa940777bada85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerData: {fileID: 11400000, guid: f3f9527db0566744c98a026f44b8a34c, type: 2}
+  CurrentVelocity: {x: 0, y: 0}
+  WorkSpace: {x: 0, y: 0}
 --- !u!1 &1774386541
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,12 +33,12 @@ namespace Assets.Scripts.Refactoring {
         /// 添加状态跳转
         /// </summary>
         /// <param name="transition"></param>
-        public override void AddTransition(FSMTransition<TState> transition) {
+        public override FSMTransition<TState> AddTransition(FSMTransition<TState> transition) {
             if (mAllSubStates.TryGetValue(transition.FromState, out var state)) {
-                state.AddTransition(transition);
+                return state.AddTransition(transition);
             }
             else {
-                base.AddTransition(transition);
+                return base.AddTransition(transition);
             }
         }
 
@@ -65,6 +65,9 @@ namespace Assets.Scripts.Refactoring {
         /// 每帧调用, 检查大状态之间的转换, 和当前子状态之间的转换
         /// </summary>     
         private void CheckTransition() {
+            if (mSubLayerTransitions == null) {
+                return;
+            }
             // 在激活状态的转换列表中寻找第一个合法的转换
             foreach (var transition in mSubLayerTransitions) {
                 if (TryTransition(transition)) {
@@ -123,13 +126,13 @@ namespace Assets.Scripts.Refactoring {
 
             CheckTransition();
 
-            ActiveSubState.OnUpdate();
+            ActiveSubState?.OnUpdate();
         }
 
         public override void OnFixedUpdate() {
             base.OnFixedUpdate();
 
-            ActiveSubState.OnFixedUpdate();
+            ActiveSubState?.OnFixedUpdate();
         }
 
         public override void OnExit() {

@@ -11,19 +11,12 @@ public class PlayerIdleState : PlayerStates {
 
     public override void OnInit() {
         base.OnInit();
-        var transToMove = RegisterTransition(PlayerStatesEnum.move);
-        transToMove.AddCondition(() => InputManager.Instance.xInput != 0f);
-        AddTransition(transToMove);
+        RegisterTransition(PlayerStatesEnum.move, () => InputManager.Instance.xInput != 0f);
     }
 
 
     public override void OnEnter() {
         base.OnEnter();
-        
-    }
-
-    public override void OnUpdate() {
-        base.OnUpdate();
-
+        controller.SetVelocity(0f);
     }
 }
