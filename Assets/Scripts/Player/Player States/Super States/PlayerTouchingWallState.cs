@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring.System.Input_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,23 +10,22 @@ public class PlayerTouchingWallState : PlayerState {
     protected bool isTouchingWall;
 
 
-    public PlayerTouchingWallState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerTouchingWallState(string name) : base(name) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
+
+        isTouchingWall = core.Sense.WallCheck;
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
-
-        isTouchingWall = player.CheckIfTouchingWall();
+    public override void OnEnter() {
+        base.OnEnter();
     }
 
-    public override void Enter() {
-        base.Enter();
-    }
+    public override void OnUpdate() {
+        base.OnUpdate();
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
-
-        xInput = player.InputHandler.xInput;
-        jumpInput = player.InputHandler.JumpInput;
+        xInput = InputManager.Instance.xInput;
+        jumpInput = InputManager.Instance.JumpInput;
     }
 }

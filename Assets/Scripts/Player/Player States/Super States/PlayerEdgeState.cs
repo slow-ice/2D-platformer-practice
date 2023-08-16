@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring.System.Input_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,30 +16,29 @@ public class PlayerEdgeState : PlayerState {
     private int xInput;
     private int yInput;
 
-    public PlayerEdgeState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerEdgeState(string name) : base(name) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
+
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
-
-    }
-
-    public override void Enter() {
-        base.Enter();
+    public override void OnEnter() {
+        base.OnEnter();
 
         player.SetVelocity(0);
         //player.transform.position = detectedPos;
 
         cornerPos = player.GetCornerPos();
 
-        startPos.Set(cornerPos.x - playerData.startOffset.x * player.FacingDirection, cornerPos.y - playerData.endOffset.y);
-        endPos.Set(cornerPos.x + playerData.startOffset.x * player.FacingDirection, cornerPos.y + playerData.endOffset.y);
+        startPos.Set(cornerPos.x - controller.PlayerData.startOffset.x * player.FacingDirection, cornerPos.y - controller.PlayerData.endOffset.y);
+        endPos.Set(cornerPos.x + controller.PlayerData.startOffset.x * player.FacingDirection, cornerPos.y + controller.PlayerData.endOffset.y);
 
         player.transform.position = startPos;
     }
 
-    public override void Exit() {
-        base.Exit();
+    public override void OnExit() {
+        base.OnExit();
 
         isHanging = false;
         if (isClimbing) {
@@ -47,12 +47,12 @@ public class PlayerEdgeState : PlayerState {
         }
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
-        xInput = player.InputHandler.xInput;
-        yInput = player.InputHandler.yInput;
-        jumpInput = player.InputHandler.JumpInput;
+        xInput = InputManager.Instance.xInput;
+        yInput = InputManager.Instance.yInput;
+        jumpInput = InputManager.Instance.JumpInput;
 
         if (player.CheckAnimFinished("climbEdge")) {
             player.Animator.SetBool("climbEdge", false);
@@ -61,7 +61,7 @@ public class PlayerEdgeState : PlayerState {
         }
 
         if (jumpInput && !isClimbing) {
-            player.InputHandler.UseJumpInput();
+            InputManager.Instance.UseJumpInput();
             stateMachine.ChangeState(player.WallJumpState);
             return;
         }

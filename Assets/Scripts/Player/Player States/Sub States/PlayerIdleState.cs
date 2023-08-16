@@ -3,39 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundState {
-    public PlayerIdleState(PlayerStateMachine stateMachine, Player player,
-        PlayerData_SO playerData, string animParmName) 
-        : base(stateMachine, player, playerData, animParmName) {
+    public PlayerIdleState(string animName) : base(animName) { }
 
+    public override void DoChecks() {
+        base.DoChecks();
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
+    public override void OnEnter() {
+        base.OnEnter();
+
+        controller.SetVelocity(0f);
     }
 
-    public override void Enter() {
-        base.Enter();
-
-        player.SetVelocity(0f);
+    public override void OnExit() {
+        base.OnExit();
     }
 
-    public override void Exit() {
-        base.Exit();
-    }
-
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         if (changeToJump) {
             return;
         }
 
         if (xInput != 0f) {
-            stateMachine.ChangeState(player.MoveState);
+            stateMachine.ChangeState(controller.GetState<PlayerMoveState>());
         }
     }
 
-    public override void PhysicsUpdate() {
-        base.PhysicsUpdate();
+    public override void OnFixedUpdate() {
+        base.OnFixedUpdate();
     }
 }

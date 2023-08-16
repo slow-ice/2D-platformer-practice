@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerAbilityState {
 
-    public PlayerAttackState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerAttackState(string name) : base(name) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
+    public override void OnEnter() {
+        base.OnEnter();
+        controller.SetVelocity(0);
+        stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
     }
 
-    public override void Enter() {
-        base.Enter();
+    public override void OnExit() {
+        base.OnExit();
     }
 
-    public override void Exit() {
-        base.Exit();
-    }
-
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
     }
 }

@@ -7,37 +7,34 @@ public class PlayerLandState : PlayerGroundState {
 
     private string animName;
 
-    public PlayerLandState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) 
-        : base(stateMachine, player, playerData, animParmName) {
-        animName = animParmName[..1].ToUpper() + animParmName[1..];
+    public PlayerLandState(string animName) : base(animName) { }
+
+    public override void OnEnter() {
+        base.OnEnter();
     }
 
-    public override void Enter() {
-        base.Enter();
+    public override void OnExit() {
+        base.OnExit();
     }
 
-    public override void Exit() {
-        base.Exit();
-    }
-
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         if (changeToJump) {
             return;
         }
 
         if (xInput != 0) {
-            stateMachine.ChangeState(player.MoveState);
+            stateMachine.ChangeState(controller.GetState<PlayerMoveState>());
             return;
         }
 
         if (xInput == 0) {
-            player.SetVelocity(0);
+            controller.SetVelocity(0);
         }
 
-        if (player.CheckAnimFinished(animName)) {
-            stateMachine.ChangeState(player.IdleState);
+        if (core.CheckAnimFinished(animName)) {
+            stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
         }
     }
 }

@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,6 +8,8 @@ public abstract class PlayerState
 {
     protected PlayerStateMachine stateMachine;
     protected Player player;
+    protected PlayerController controller;
+    protected PlayerCore core;
     protected PlayerData_SO playerData;
 
     protected float startTime;
@@ -20,26 +23,45 @@ public abstract class PlayerState
         this.animParmName = animParmName;
     }
 
-    public virtual void Enter() {
-        DoCheck();
+    public PlayerState(string animParmName) {
+        this.animParmName = animParmName;
+    }
+
+    public virtual void OnEnter() {
+        DoChecks();
         startTime = Time.time;
-        player.Animator.SetBool(animParmName, true);
+        core.mAnimator.SetBool(animParmName, true);
         Debug.Log($"State: {animParmName}");
     }
 
-    public virtual void Exit() {
-        player.Animator.SetBool(animParmName , false);
+    public virtual void OnExit() {
+        core.mAnimator.SetBool(animParmName , false);
     }
 
-    public virtual void LogicUpdate() {
+    public virtual void OnUpdate() {
 
     }
 
-    public virtual void PhysicsUpdate() {
-        DoCheck();
+    public virtual void OnFixedUpdate() {
+        DoChecks();
     }
 
-    public virtual void DoCheck() {
+    public virtual void DoChecks() {
 
+    }
+
+    public PlayerState SetCore(PlayerCore core) {
+        this.core = core;
+        return this;
+    }
+
+    public PlayerState SetController(PlayerController controller) {
+        this.controller = controller;
+        return this;
+    }
+
+    public PlayerState SetStateMachine(PlayerStateMachine stateMachine) {
+        this.stateMachine = stateMachine;
+        return this;
     }
 }

@@ -70,11 +70,11 @@ public class Player : MonoBehaviour
     private void Update() {
         CurrentVelocity = RB.velocity;
 
-        StateMachine.CurrentState.LogicUpdate();
+        StateMachine.CurrentState.OnUpdate();
     }
 
     private void FixedUpdate() {
-        StateMachine.CurrentState.PhysicsUpdate();
+        StateMachine.CurrentState.OnFixedUpdate();
     }
 
     #endregion
@@ -161,17 +161,17 @@ public class Player : MonoBehaviour
     #region Util Functions
 
     private void InitializeState() {
-        IdleState = new PlayerIdleState(StateMachine, this, PlayerData, "idle");
-        MoveState = new PlayerMoveState(StateMachine, this, PlayerData, "move");
-        LandState = new PlayerLandState(StateMachine, this, PlayerData, "land");
-        JumpState = new PlayerJumpState(StateMachine, this, PlayerData, "inAir");
-        InAirState = new PlayerInAirState(StateMachine, this, PlayerData, "inAir");
-        WallSlideState = new PlayerWallSlideState(StateMachine, this, PlayerData, "wallSlide");
-        WallJumpState = new PlayerWallJumpState(StateMachine, this, PlayerData, "inAir");
-        EdgeState = new PlayerEdgeState(StateMachine, this, PlayerData, "edgeClimbState");
-        DashState = new PlayerDashState(StateMachine, this, PlayerData, "inAir");
-        PrimaryAttackState = new PlayerAttackState(StateMachine, this, PlayerData, "attack");
-        SecondAttackState = new PlayerAttackState(StateMachine, this, PlayerData, "attack");
+        //IdleState = new PlayerIdleState(StateMachine, this, PlayerData, "idle");
+        //MoveState = new PlayerMoveState(StateMachine, this, PlayerData, "move");
+        //LandState = new PlayerLandState(StateMachine, this, PlayerData, "land");
+        //JumpState = new PlayerJumpState(StateMachine, this, PlayerData, "inAir");
+        //InAirState = new PlayerInAirState(StateMachine, this, PlayerData, "inAir");
+        //WallSlideState = new PlayerWallSlideState(StateMachine, this, PlayerData, "wallSlide");
+        //WallJumpState = new PlayerWallJumpState(StateMachine, this, PlayerData, "inAir");
+        //EdgeState = new PlayerEdgeState(StateMachine, this, PlayerData, "edgeClimbState");
+        //DashState = new PlayerDashState(StateMachine, this, PlayerData, "inAir");
+        //PrimaryAttackState = new PlayerAttackState(StateMachine, this, PlayerData, "attack");
+        //SecondAttackState = new PlayerAttackState(StateMachine, this, PlayerData, "attack");
     }
 
     public void Flip() {

@@ -3,37 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundState {
-    public PlayerMoveState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerMoveState(string name) : base(name) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
+    public override void OnEnter() {
+        base.OnEnter();
     }
 
-    public override void Enter() {
-        base.Enter();
+    public override void OnExit() {
+        base.OnExit();
     }
 
-    public override void Exit() {
-        base.Exit();
-    }
-
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
         if (changeToJump) {
             return;
         }
 
-        player.CheckShouldFlip(xInput);
+        core.CheckShouldFlip(xInput);
 
-        player.SetVelocityX(playerData.movementSpeed * xInput);
+        controller.SetVelocityX(controller.PlayerData.movementSpeed * xInput);
         if (xInput == 0f) {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
         }
     }
 
-    public override void PhysicsUpdate() {
-        base.PhysicsUpdate();
+    public override void OnFixedUpdate() {
+        base.OnFixedUpdate();
     }
 }

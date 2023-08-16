@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring.System.Input_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,29 +7,26 @@ public class PlayerJumpState : PlayerAbilityState {
 
     private int amountOfJumpLeft;
 
-    public PlayerJumpState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) 
-        : base(stateMachine, player, playerData, animParmName) {
-        amountOfJumpLeft = player.amountOfJump;
-    }
+    public PlayerJumpState(string name) : base(name) { }
 
-    public override void Enter() {
-        base.Enter();
+    public override void OnEnter() {
+        base.OnEnter();
 
-        player.InputHandler.jumpHoldTime = 0;
-        player.SetVelocityY(playerData.jumpForce);
-        player.InAirState.SetIsJumping();
+        InputManager.Instance.jumpHoldTime = 0;
+        controller.SetVelocityY(controller.PlayerData.jumpForce);
+        controller.GetState<PlayerInAirState>().SetIsJumping();
 
         DecreaseJumpLeft();
         isAbilityDone = true;
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
     }
 
     public bool CanJump => amountOfJumpLeft > 0;
 
     public void DecreaseJumpLeft() => amountOfJumpLeft--;
 
-    public void ResetJumpLeft() => amountOfJumpLeft = player.amountOfJump;
+    public void ResetJumpLeft() => amountOfJumpLeft = core.amountOfJump;
 }

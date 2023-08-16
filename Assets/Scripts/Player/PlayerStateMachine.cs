@@ -9,12 +9,12 @@ public class PlayerStateMachine
 
     public void Initialize(PlayerState playerState) {
         CurrentState = playerState;
-        CurrentState.Enter();
+        CurrentState.OnEnter();
     }
 
     public void ChangeState(PlayerState playerState) {
-        CurrentState?.Exit();
+        CurrentState?.OnExit();
         CurrentState = playerState;
-        CurrentState.Enter();
+        CurrentState.OnEnter();
     }
 }

@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring.System.Input_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,41 +9,40 @@ public class PlayerAbilityState : PlayerState {
     protected bool isGrounded;
     protected int xInput;
 
-    public PlayerAbilityState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerAbilityState(string animParmName) : base(animParmName) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
+
+        isGrounded = core.Sense.GroundCheck;
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
-
-        isGrounded = player.CheckIfGrounded();
-    }
-
-    public override void Enter() {
-        base.Enter();
+    public override void OnEnter() {
+        base.OnEnter();
 
         isAbilityDone = false;
     }
 
-    public override void Exit() {
-        base.Exit();
+    public override void OnExit() {
+        base.OnExit();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
-        xInput = player.InputHandler.xInput;
+        xInput = InputManager.Instance.xInput;
 
         if (isAbilityDone) {
-            if (isGrounded && player.CurrentVelocity.y < 0.1f) {
-                stateMachine.ChangeState(player.IdleState);
+            if (isGrounded && controller.CurrentVelocity.y < 0.1f) {
+                stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
             }
             else {
-                stateMachine.ChangeState(player.InAirState);
+                stateMachine.ChangeState(controller.GetState<PlayerInAirState>());
             }
         }
     }
 
-    public override void PhysicsUpdate() {
-        base.PhysicsUpdate();
+    public override void OnFixedUpdate() {
+        base.OnFixedUpdate();
     }
 }

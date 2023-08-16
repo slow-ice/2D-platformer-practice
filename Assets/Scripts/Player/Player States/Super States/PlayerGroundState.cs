@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Refactoring;
+using Assets.Scripts.Refactoring.System.Input_System;
 using UnityEngine;
 
 
@@ -12,65 +14,65 @@ public class PlayerGroundState : PlayerState {
     protected bool changeToJump;
     private bool dashInput;
 
-    public PlayerGroundState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerGroundState(string animName) :base(animName) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
+
+        isGrounded = core.Sense.GroundCheck;
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
-
-        isGrounded = player.CheckIfGrounded();
-    }
-
-    public override void Enter() {
-        base.Enter();
+    public override void OnEnter() {
+        base.OnEnter();
 
         changeToJump = false;
-        player.JumpState.ResetJumpLeft();
-        player.DashState.ResetCanDash();
+
+        controller.GetState<PlayerJumpState>().ResetJumpLeft();
+        controller.GetState<PlayerDashState>().ResetCanDash();
     }
 
-    public override void Exit() {
-        base.Exit();
+    public override void OnExit() {
+        base.OnExit();
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
-        xInput = player.InputHandler.xInput;
-        jumpInput = player.InputHandler.JumpInput;
-        dashInput = player.InputHandler.DashInput;
+        xInput = InputManager.Instance.xInput;
+        jumpInput = InputManager.Instance.JumpInput;
+        dashInput = InputManager.Instance.DashInput;
 
-        if (player.InputHandler.AttackInputs[(int)CombatInputs.Primary]) {
-            stateMachine.ChangeState(player.PrimaryAttackState);
+        if (InputManager.Instance.AttackInputs[(int)CombatInputs.Primary]) {
+            stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
             return;
         }
 
-        if (player.InputHandler.AttackInputs[(int)(CombatInputs.Secondary)]) {
-            stateMachine.ChangeState(player.SecondAttackState); 
+        if (InputManager.Instance.AttackInputs[(int)(CombatInputs.Secondary)]) {
+            stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
             return;
         }
 
-        if (jumpInput && player.JumpState.CanJump) {
+        if (jumpInput && controller.GetState<PlayerJumpState>().CanJump) {
             changeToJump = true;
-            player.InputHandler.UseJumpInput();
-            stateMachine.ChangeState(player.JumpState);
+            InputManager.Instance.UseJumpInput();
+            stateMachine.ChangeState(controller.GetState<PlayerJumpState>());
             return;
         }
 
         if (!isGrounded) {
-            player.InAirState.StartCoyoteTime();
-            stateMachine.ChangeState(player.InAirState);
+            controller.GetState<PlayerInAirState>().StartCoyoteTime();
+            stateMachine.ChangeState(controller.GetState<PlayerInAirState>());
             return;
         }
 
-        if (dashInput && player.DashState.CheckIfCanDash()) {
-            stateMachine.ChangeState(player.DashState);
+        if (dashInput && controller.GetState<PlayerDashState>().CheckIfCanDash()) {
+            stateMachine.ChangeState(controller.GetState<PlayerDashState>());
             return;
         }
     }
 
-    public override void PhysicsUpdate() {
-        base.PhysicsUpdate();
+    public override void OnFixedUpdate() {
+        base.OnFixedUpdate();
     }
 }
 

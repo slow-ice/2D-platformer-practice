@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring.System.Input_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,130 +18,129 @@ public class PlayerInAirState : PlayerState {
     private int xInput;
 
 
-    public PlayerInAirState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerInAirState(string name) : base(name) { }
+
+    public override void DoChecks() {
+        base.DoChecks();
+
+        isGrounded = core.Sense.GroundCheck;
+        //isTouchingWall = player.CheckIfTouchingWall();
+        //isTouchingWallBack = player.CheckIfTouchingWallBack();
+        //isTouchingEdge = player.CheckIfTouchingEdge();
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
+    public override void OnEnter() {
+        base.OnEnter();
 
-        isGrounded = player.CheckIfGrounded();
-        isTouchingWall = player.CheckIfTouchingWall();
-        isTouchingWallBack = player.CheckIfTouchingWallBack();
-        isTouchingEdge = player.CheckIfTouchingEdge();
+        controller.mRigidbody.gravityScale = controller.PlayerData.gravityScale;
     }
 
-    public override void Enter() {
-        base.Enter();
-
-        player.RB.gravityScale = playerData.gravityScale;
-    }
-
-    public override void Exit() {
-        base.Exit();
+    public override void OnExit() {
+        base.OnExit();
 
         isJumping = false;
         isWallJumping = false;
     }
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
+    public override void OnUpdate() {
+        base.OnUpdate();
 
-        xInput = player.InputHandler.xInput;
-        jumpInput = player.InputHandler.JumpInput;
-        dashInput = player.InputHandler.DashInput;
+        xInput = InputManager.Instance.xInput;
+        jumpInput = InputManager.Instance.JumpInput;
+        dashInput = InputManager.Instance.DashInput;
 
         CheckCoyoteTime();
         JumpExtendedTime();
         MovementInAir();
 
-        if (isGrounded && player.CurrentVelocity.y < 0.01f) {
-            stateMachine.ChangeState(player.LandState);
+        if (isGrounded && controller.CurrentVelocity.y < 0.01f) {
+            stateMachine.ChangeState(controller.GetState<PlayerLandState>());
             return;
         }
 
         // 空中跳跃
-        if (jumpInput && player.JumpState.CanJump) {
-            player.InputHandler.UseJumpInput();
-            stateMachine.ChangeState(player.JumpState);
+        if (jumpInput && controller.GetState<PlayerJumpState>().CanJump) {
+            InputManager.Instance.UseJumpInput();
+            stateMachine.ChangeState(controller.GetState<PlayerJumpState>());
             return;
         }
 
         if (jumpInput && (isTouchingWall || isTouchingWallBack)) {
-            player.InputHandler.UseJumpInput();
-            stateMachine.ChangeState(player.WallJumpState);
+            InputManager.Instance.UseJumpInput();
+            stateMachine.ChangeState(controller.GetState<PlayerWallJumpState>());
             return;
         }
 
-        if (dashInput && player.DashState.CheckIfCanDash()) {
-            stateMachine.ChangeState(player.DashState);
+        if (dashInput && controller.GetState<PlayerDashState>().CheckIfCanDash()) {
+            stateMachine.ChangeState(controller.GetState<PlayerDashState>());
             return;
         }
 
         if (isTouchingWall && !isTouchingEdge) {
-            player.EdgeState.SetDetectedPos(player.transform.position);
-            stateMachine.ChangeState(player.EdgeState);
+            controller.GetState<PlayerEdgeState>().SetDetectedPos(controller.transform.position);
+            stateMachine.ChangeState(controller.GetState<PlayerEdgeState>());
             return;
         }
 
-        if (isTouchingWall && player.CurrentVelocity.y < 0f && xInput == player.FacingDirection) {
-            stateMachine.ChangeState(player.WallSlideState);
+        if (isTouchingWall && controller.CurrentVelocity.y < 0f && xInput == core.FacingDirection) {
+            stateMachine.ChangeState(controller.GetState<PlayerWallSlideState>());
             return;
         }
 
-        if (player.InputHandler.AttackInputs[(int)CombatInputs.Primary]) {
-            stateMachine.ChangeState(player.PrimaryAttackState);
+        if (InputManager.Instance.AttackInputs[(int)CombatInputs.Primary]) {
+            stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
             return;
         }
 
-        if (player.InputHandler.AttackInputs[(int)(CombatInputs.Secondary)]) {
-            stateMachine.ChangeState(player.SecondAttackState);
+        if (InputManager.Instance.AttackInputs[(int)(CombatInputs.Secondary)]) {
+            stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
             return;
         }
     }
 
     private void JumpExtendedTime() {
         if (isJumping) {
-            player.SetVelocityY(playerData.jumpForce);
-            if (!player.InputHandler.jumpButtonUp) {
-                player.InputHandler.jumpHoldTime += Time.deltaTime;
-                if (player.InputHandler.jumpHoldTime > playerData.jumpPressedWindow) {
+            controller.SetVelocityY(controller.PlayerData.jumpForce);
+            if (!InputManager.Instance.jumpButtonUp) {
+                InputManager.Instance.jumpHoldTime += Time.deltaTime;
+                if (InputManager.Instance.jumpHoldTime > controller.PlayerData.jumpPressedWindow) {
                     isJumping = false;
-                    player.RB.gravityScale = playerData.fallGravityScale;
+                    controller.mRigidbody.gravityScale = controller.PlayerData.fallGravityScale;
                 }
             }
             else {
                 isJumping = false;
-                player.RB.gravityScale = playerData.fallGravityScale;
+                controller.mRigidbody.gravityScale = controller.PlayerData.fallGravityScale;
             }
 
-            if (player.CurrentVelocity.y < 0) {
+            if (controller.CurrentVelocity.y < 0) {
                 isJumping = false;
-                player.RB.gravityScale = playerData.fallGravityScale;
+                controller.mRigidbody.gravityScale = controller.PlayerData.fallGravityScale;
             }
         }
     }
 
     private void CheckCoyoteTime() {
-        if (coyoteTime && Time.time > startTime + playerData.coyoteTime) { 
+        if (coyoteTime && Time.time > startTime + controller.PlayerData.coyoteTime) { 
             coyoteTime = false;
-            player.JumpState.DecreaseJumpLeft();
+            controller.GetState<PlayerJumpState>().DecreaseJumpLeft();
         }
     }
 
     private void MovementInAir() {
-        player.CheckShouldFlip(xInput);
+        core.CheckShouldFlip(xInput);
 
-        var targetVeloX = xInput * playerData.movementSpeed;
+        var targetVeloX = xInput * controller.PlayerData.movementSpeed;
 
         // 墙跳 速度为阻尼变化
         if (isWallJumping) {
-            targetVeloX = Mathf.Lerp(player.CurrentVelocity.x, xInput * playerData.movementSpeed, (float)(Time.deltaTime * 1));
+            targetVeloX = Mathf.Lerp(controller.CurrentVelocity.x, xInput * controller.PlayerData.movementSpeed, (float)(Time.deltaTime * 1));
         }
         
-        player.SetVelocityX(targetVeloX);
+        controller.SetVelocityX(targetVeloX);
 
-        player.Animator.SetFloat("xVelocity", Mathf.Abs(xInput));
-        player.Animator.SetFloat("yVelocity", player.CurrentVelocity.y);
+        controller.mAnimator.SetFloat("xVelocity", Mathf.Abs(xInput));
+        controller.mAnimator.SetFloat("yVelocity", controller.CurrentVelocity.y);
     }
 
     public void StartCoyoteTime() => coyoteTime = true;

@@ -1,3 +1,4 @@
+using Assets.Scripts.Refactoring.System.Input_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,43 +7,42 @@ public class PlayerWallSlideState : PlayerTouchingWallState {
 
     private bool isGrounded;
 
-    public PlayerWallSlideState(PlayerStateMachine stateMachine, Player player, PlayerData_SO playerData, string animParmName) : base(stateMachine, player, playerData, animParmName) {
+    public PlayerWallSlideState(string name) : base(name) { }
+
+    public override void OnEnter() {
+        base.OnEnter();
     }
 
-    public override void Enter() {
-        base.Enter();
-    }
+    public override void OnUpdate() {
+        base.OnUpdate();
 
-    public override void LogicUpdate() {
-        base.LogicUpdate();
-
-        player.SetVelocityY(-playerData.wallSlideSpeed);
+        controller.SetVelocityY(-controller.PlayerData.wallSlideSpeed);
 
         if (jumpInput) {
-            player.InputHandler.UseJumpInput();
-            stateMachine.ChangeState(player.WallJumpState);
+            InputManager.Instance.UseJumpInput();
+            stateMachine.ChangeState(controller.GetState<PlayerWallJumpState>());
             return;
         }
 
         if (!isTouchingWall) {
-            stateMachine.ChangeState(player.InAirState);
+            stateMachine.ChangeState(controller.GetState<PlayerInAirState>());
             return;
         }
 
-        if (xInput != 0 && xInput != player.FacingDirection) {
-            player.CheckShouldFlip(xInput);
-            stateMachine.ChangeState(player.InAirState);
+        if (xInput != 0 && xInput != core.FacingDirection) {
+            core.CheckShouldFlip(xInput);
+            stateMachine.ChangeState(controller.GetState<PlayerInAirState>());
             return;
         }
         if (isGrounded) {
-            stateMachine.ChangeState(player.IdleState);
+            stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
             return;
         }
     }
 
-    public override void DoCheck() {
-        base.DoCheck();
+    public override void DoChecks() {
+        base.DoChecks();
 
-        isGrounded = player.CheckIfGrounded();
+        isGrounded = core.Sense.GroundCheck;
     }
 }

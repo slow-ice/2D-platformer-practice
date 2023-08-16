@@ -119,8 +119,3 @@ public class InputHandler : MonoBehaviour
         jumpPressedTime = Time.time;
     }
 }
-
-public enum CombatInputs {
-    Primary,
-    Secondary,
-}
