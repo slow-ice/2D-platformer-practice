@@ -35,17 +35,6 @@ public class PlayerDashState : PlayerAbilityState {
         startTime = Time.unscaledTime;
 
         controller.DashIndicator.gameObject.SetActive(true);
-
-
-        dashDirectionInput = InputManager.Instance.DashDirectionInput;
-        dashInput = InputManager.Instance.DashInput;
-
-        if (dashDirectionInput != Vector2.zero) {
-            dashDirection = dashDirectionInput;
-        }
-
-        var angle = Vector2.SignedAngle(Vector2.right, dashDirection);
-        controller.DashIndicator.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     public override void OnExit() {

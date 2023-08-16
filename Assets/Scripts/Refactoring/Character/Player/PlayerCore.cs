@@ -75,6 +75,7 @@ public class PlayerCore : IController
     public void ResetJumpLeft() => amountOfJumpLeft = amountOfJump;
     public void DecreaseJumpLeft() => amountOfJumpLeft--;
 
+
     public void Flip() {
         FacingDirection *= -1;
         mPlayerTrans.Rotate(0f, 180f, 0f);

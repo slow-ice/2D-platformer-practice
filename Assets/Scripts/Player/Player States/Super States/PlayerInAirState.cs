@@ -24,9 +24,9 @@ public class PlayerInAirState : PlayerState {
         base.DoChecks();
 
         isGrounded = core.Sense.GroundCheck;
-        //isTouchingWall = player.CheckIfTouchingWall();
-        //isTouchingWallBack = player.CheckIfTouchingWallBack();
-        //isTouchingEdge = player.CheckIfTouchingEdge();
+        isTouchingWall = core.Sense.WallCheck;
+        isTouchingWallBack = core.Sense.WallBackCheck;
+        isTouchingEdge = core.Sense.EdgeCheck;
     }
 
     public override void OnEnter() {

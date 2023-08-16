@@ -28,5 +28,5 @@ public class PlayerJumpState : PlayerAbilityState {
 
     public void DecreaseJumpLeft() => amountOfJumpLeft--;
 
-    public void ResetJumpLeft() => amountOfJumpLeft = core.amountOfJump;
+    public void ResetJumpLeft() => amountOfJumpLeft = controller.amountOfJump;
 }

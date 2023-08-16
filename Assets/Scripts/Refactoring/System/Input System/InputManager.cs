@@ -5,6 +5,8 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
     public class InputManager : Singleton<InputManager> {
         public InputControl inputActions;
 
+        public PlayerController player;
+
         public int xInput {
             get {
                 return (int)(movementInput * Vector2.right).normalized.x;
@@ -45,6 +47,9 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
 
         public bool[] AttackInputs;
 
+        private void Start() {
+            player = GameObject.Find("Player").GetComponent<PlayerController>();
+        }
 
         private void OnEnable() {
             if (inputActions == null) {
@@ -90,7 +95,7 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
 
         private void OnDirectionInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
             DashDirectionInput = obj.ReadValue<Vector2>();
-            DashDirectionInput = Camera.main.ScreenToWorldPoint((Vector3)DashDirectionInput) - transform.position;
+            DashDirectionInput = Camera.main.ScreenToWorldPoint((Vector3)DashDirectionInput) - player.transform.position;
             DashDirectionInput.Normalize();
             DashButtonUp = false;
         }

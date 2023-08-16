@@ -39,10 +39,13 @@ namespace Assets.Scripts.Refactoring {
 
         public SenseProperty<Collider2D> GroundCheck;
         public SenseProperty<RaycastHit2D> WallCheck;
+        public SenseProperty<RaycastHit2D> WallBackCheck;
+        public SenseProperty<RaycastHit2D> EdgeCheck;
 
 
         public Transform groundCheckTrans;
-        public Transform wallCheckTransTrans;
+        public Transform wallCheckTrans;
+        public Transform edgeCheckTrans;
 
         private PlayerData_SO PlayerData;
         private PlayerController mPlayer;
@@ -56,8 +59,20 @@ namespace Assets.Scripts.Refactoring {
                 );
 
             WallCheck = new SenseProperty<RaycastHit2D>(
-                () => Physics2D.Raycast(wallCheckTransTrans.position, Vector2.right * mPlayer.mCore.FacingDirection,
-                PlayerData.WallCheckDistance, PlayerData.GroundLayer),
+                () => Physics2D.Raycast(wallCheckTrans.position, Vector2.right * mPlayer.mCore.FacingDirection,
+                    PlayerData.WallCheckDistance, PlayerData.GroundLayer),
+                value => value.collider != null
+                );
+
+            WallBackCheck = new SenseProperty<RaycastHit2D>(
+                () => Physics2D.Raycast(wallCheckTrans.position, Vector2.right * -mPlayer.mCore.FacingDirection,
+                    PlayerData.WallCheckDistance, PlayerData.GroundLayer),
+                value => value.collider != null
+                );
+
+            EdgeCheck = new SenseProperty<RaycastHit2D>(
+                () => Physics2D.Raycast(edgeCheckTrans.position, Vector2.right * mPlayer.mCore.FacingDirection,
+                    PlayerData.WallCheckDistance, PlayerData.GroundLayer),
                 value => value.collider != null
                 );
         }

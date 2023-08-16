@@ -26,15 +26,15 @@ public class PlayerEdgeState : PlayerState {
     public override void OnEnter() {
         base.OnEnter();
 
-        player.SetVelocity(0);
-        //player.transform.position = detectedPos;
+        controller.SetVelocity(0);
+        controller.transform.position = detectedPos;
 
-        cornerPos = player.GetCornerPos();
+        cornerPos = controller.GetCornerPos();
 
-        startPos.Set(cornerPos.x - controller.PlayerData.startOffset.x * player.FacingDirection, cornerPos.y - controller.PlayerData.endOffset.y);
-        endPos.Set(cornerPos.x + controller.PlayerData.startOffset.x * player.FacingDirection, cornerPos.y + controller.PlayerData.endOffset.y);
+        startPos.Set(cornerPos.x - controller.PlayerData.startOffset.x * core.FacingDirection, cornerPos.y - controller.PlayerData.endOffset.y);
+        endPos.Set(cornerPos.x + controller.PlayerData.startOffset.x * core.FacingDirection, cornerPos.y + controller.PlayerData.endOffset.y);
 
-        player.transform.position = startPos;
+        controller.transform.position = startPos;
     }
 
     public override void OnExit() {
@@ -43,7 +43,7 @@ public class PlayerEdgeState : PlayerState {
         isHanging = false;
         if (isClimbing) {
             isClimbing = false;
-            player.transform.position = endPos;
+            controller.transform.position = endPos;
         }
     }
 
@@ -54,33 +54,33 @@ public class PlayerEdgeState : PlayerState {
         yInput = InputManager.Instance.yInput;
         jumpInput = InputManager.Instance.JumpInput;
 
-        if (player.CheckAnimFinished("climbEdge")) {
-            player.Animator.SetBool("climbEdge", false);
-            stateMachine.ChangeState(player.IdleState);
+        if (core.CheckAnimFinished("climbEdge")) {
+            controller.mAnimator.SetBool("climbEdge", false);
+            stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
             return;
         }
 
         if (jumpInput && !isClimbing) {
             InputManager.Instance.UseJumpInput();
-            stateMachine.ChangeState(player.WallJumpState);
+            stateMachine.ChangeState(controller.GetState<PlayerWallJumpState>());
             return;
         }
 
-        if (player.AnimationTrigger("holdEdge")) {
+        if (core.AnimationTrigger("holdEdge")) {
             isHanging = true;
         }
 
-        player.transform.position = startPos;
-        player.SetVelocity(0);
+        controller.transform.position = startPos;
+        controller.SetVelocity(0);
 
         if (yInput == -1 && !isClimbing) {
-            stateMachine.ChangeState(player.InAirState);
+            stateMachine.ChangeState(controller.GetState<PlayerInAirState>());
             return;
         }
 
-        if (xInput == player.FacingDirection && isHanging && !isClimbing) {
+        if (xInput == core.FacingDirection && isHanging && !isClimbing) {
             isClimbing = true;
-            player.Animator.SetBool("climbEdge", true);
+            controller.mAnimator.SetBool("climbEdge", true);
         }
     }
 

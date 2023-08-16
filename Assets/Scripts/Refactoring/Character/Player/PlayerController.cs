@@ -4,6 +4,7 @@ using QFramework;
 using System;
 using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Refactoring {
@@ -112,6 +113,22 @@ namespace Assets.Scripts.Refactoring {
         }
 
         #endregion
+
+        public Vector2 GetCornerPos() {
+            var xhit = Physics2D.Raycast(mCore.Sense.wallCheckTrans.position, Vector2.right * mCore.FacingDirection,
+                PlayerData.WallCheckDistance, PlayerData.GroundLayer);
+            float xdis = (xhit.distance + 0.015f) * mCore.FacingDirection;
+            WorkSpace.Set(xdis, 0f);
+
+            var yhit = Physics2D.Raycast(mCore.Sense.edgeCheckTrans.position + (Vector3)WorkSpace, Vector2.down,
+                mCore.Sense.edgeCheckTrans.position.y - mCore.Sense.wallCheckTrans.position.y + 0.015f, PlayerData.GroundLayer);
+            float ydis = yhit.distance;
+
+            WorkSpace.Set(transform.position.x + xdis, mCore.Sense.edgeCheckTrans.position.y - ydis);
+
+            Debug.Log($"coner position: {WorkSpace}");
+            return WorkSpace;
+        }
 
         public IArchitecture GetArchitecture() {
             return GameCenter.Interface;
