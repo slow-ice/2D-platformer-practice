@@ -7396,6 +7396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a9897c958baff4bbfa940777bada85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <mAnimator>k__BackingField: {fileID: 0}
+  <mRigidbody>k__BackingField: {fileID: 0}
   PlayerData: {fileID: 11400000, guid: f3f9527db0566744c98a026f44b8a34c, type: 2}
   DashIndicator: {fileID: 1560331484}
   CurrentVelocity: {x: 0, y: 0}

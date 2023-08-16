@@ -15,7 +15,7 @@ public class PlayerWallJumpState : PlayerAbilityState {
         controller.GetState<PlayerInAirState>().SetIsWallJumping();
 
         core.Flip();
-        isAbilityDone = true;
+        WaitTimeManager.WaitTime(0.3f, () => isAbilityDone = true);
     }
 
     public override void OnUpdate() {
