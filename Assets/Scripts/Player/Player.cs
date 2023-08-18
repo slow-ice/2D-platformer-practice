@@ -123,21 +123,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool CheckIfGrounded() {
-        return Physics2D.OverlapCircle(GroundCheck.position, PlayerData.GroundCheckRadius, PlayerData.GroundLayer);
-    }
+    //public bool CheckIfGrounded() {
+    //    return Physics2D.OverlapCircle(GroundCheck.position, PlayerData.GroundCheckRadius, PlayerData.GroundLayer);
+    //}
 
-    public bool CheckIfTouchingWall() {
-        return Physics2D.Raycast(WallCheck.position, Vector2.right * FacingDirection, PlayerData.WallCheckDistance, PlayerData.GroundLayer);
-    }
+    //public bool CheckIfTouchingWall() {
+    //    return Physics2D.Raycast(WallCheck.position, Vector2.right * FacingDirection, PlayerData.WallCheckDistance, PlayerData.GroundLayer);
+    //}
 
-    public bool CheckIfTouchingWallBack() {
-        return Physics2D.Raycast(WallCheck.position, Vector2.right * -FacingDirection, PlayerData.WallCheckDistance, PlayerData.GroundLayer);
-    }
+    //public bool CheckIfTouchingWallBack() {
+    //    return Physics2D.Raycast(WallCheck.position, Vector2.right * -FacingDirection, PlayerData.WallCheckDistance, PlayerData.GroundLayer);
+    //}
 
-    public bool CheckIfTouchingEdge() {
-        return Physics2D.Raycast(EdgeCheck.position, Vector2.right * FacingDirection, PlayerData.WallCheckDistance, PlayerData.GroundLayer);
-    }
+    //public bool CheckIfTouchingEdge() {
+    //    return Physics2D.Raycast(EdgeCheck.position, Vector2.right * FacingDirection, PlayerData.WallCheckDistance, PlayerData.GroundLayer);
+    //}
 
     public bool CheckAnimFinished(string animName) {
         AnimatorInfo = Animator.GetCurrentAnimatorStateInfo(0);
@@ -181,12 +181,12 @@ public class Player : MonoBehaviour
 
     public Vector2 GetCornerPos() {
         var xhit = Physics2D.Raycast(WallCheck.position, Vector2.right * FacingDirection, 
-            PlayerData.WallCheckDistance, PlayerData.GroundLayer);
+            PlayerData.WallCheckDistance, LayerMask.GetMask("Ground"));
         float xdis = (xhit.distance + 0.015f) * FacingDirection;
         workSpace.Set(xdis, 0f);
 
         var yhit = Physics2D.Raycast(EdgeCheck.position + (Vector3)workSpace, Vector2.down,
-            EdgeCheck.position.y - WallCheck.position.y + 0.015f, PlayerData.GroundLayer);
+            EdgeCheck.position.y - WallCheck.position.y + 0.015f, LayerMask.GetMask("Ground"));
         float ydis = yhit.distance;
 
         workSpace.Set(transform.position.x + xdis, EdgeCheck.position.y - ydis);

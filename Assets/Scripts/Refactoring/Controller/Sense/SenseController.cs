@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Refactoring.Architecture;
+using Assets.Scripts.Refactoring.Model.Data;
 using QFramework;
 using System;
 using System.Collections;
@@ -30,6 +31,8 @@ namespace Assets.Scripts.Refactoring {
         public void Detect() => detectAction?.Invoke();
 
         public static implicit operator bool(SenseProperty<T> s) {
+            if (s == null) 
+                return false;
             s.Detect();
             return s.IsDetected;
         }
@@ -47,39 +50,40 @@ namespace Assets.Scripts.Refactoring {
         public Transform wallCheckTrans;
         public Transform edgeCheckTrans;
 
-        private PlayerData_SO PlayerData;
+        //private CharacterData_SO CharacterData;
+        public CharacterData_SO CharacterData;
         private PlayerController mPlayer;
 
         private int FacingDirection;
 
         void Start() {
             GroundCheck = new SenseProperty<Collider2D>(
-                () => Physics2D.OverlapCircle(groundCheckTrans.position, PlayerData.GroundCheckRadius, PlayerData.GroundLayer),
+                () => Physics2D.OverlapCircle(groundCheckTrans.position, CharacterData.GroundCheckRadius, LayerMask.GetMask("Ground")),
                 value => value == true
                 );
 
             WallCheck = new SenseProperty<RaycastHit2D>(
-                () => Physics2D.Raycast(wallCheckTrans.position, Vector2.right * mPlayer.mCore.FacingDirection,
-                    PlayerData.WallCheckDistance, PlayerData.GroundLayer),
+                () => Physics2D.Raycast(wallCheckTrans.position, Vector2.right * transform.localScale.x,
+                    CharacterData.WallCheckDistance, LayerMask.GetMask("Ground")),
                 value => value.collider != null
                 );
 
             WallBackCheck = new SenseProperty<RaycastHit2D>(
-                () => Physics2D.Raycast(wallCheckTrans.position, Vector2.right * -mPlayer.mCore.FacingDirection,
-                    PlayerData.WallCheckDistance, PlayerData.GroundLayer),
+                () => Physics2D.Raycast(wallCheckTrans.position, Vector2.right * -transform.localScale.x,
+                    CharacterData.WallCheckDistance, LayerMask.GetMask("Ground")),
                 value => value.collider != null
                 );
 
             EdgeCheck = new SenseProperty<RaycastHit2D>(
-                () => Physics2D.Raycast(edgeCheckTrans.position, Vector2.right * mPlayer.mCore.FacingDirection,
-                    PlayerData.WallCheckDistance, PlayerData.GroundLayer),
+                () => Physics2D.Raycast(edgeCheckTrans.position, Vector2.right * transform.localScale.x,
+                    CharacterData.WallCheckDistance, LayerMask.GetMask("Ground")),
                 value => value.collider != null
                 );
         }
 
         public SenseController SetPlayer(PlayerController player) {
             mPlayer = player;
-            PlayerData = player.PlayerData;
+            CharacterData = player.PlayerData;
             FacingDirection = player.mCore.FacingDirection;
             return this;
         }

@@ -20,7 +20,9 @@ namespace Assets.Scripts.Refactoring {
 
         public Transform DashIndicator;
 
+        [HideInInspector]
         public Vector2 CurrentVelocity;
+        [HideInInspector]
         public Vector2 WorkSpace = new Vector2();
 
         public int amountOfJump = 1;
@@ -116,12 +118,12 @@ namespace Assets.Scripts.Refactoring {
 
         public Vector2 GetCornerPos() {
             var xhit = Physics2D.Raycast(mCore.Sense.wallCheckTrans.position, Vector2.right * mCore.FacingDirection,
-                PlayerData.WallCheckDistance, PlayerData.GroundLayer);
+                PlayerData.WallCheckDistance, LayerMask.GetMask("Ground"));
             float xdis = (xhit.distance + 0.015f) * mCore.FacingDirection;
             WorkSpace.Set(xdis, 0f);
 
             var yhit = Physics2D.Raycast(mCore.Sense.edgeCheckTrans.position + (Vector3)WorkSpace, Vector2.down,
-                mCore.Sense.edgeCheckTrans.position.y - mCore.Sense.wallCheckTrans.position.y + 0.015f, PlayerData.GroundLayer);
+                mCore.Sense.edgeCheckTrans.position.y - mCore.Sense.wallCheckTrans.position.y + 0.015f, LayerMask.GetMask("Ground"));
             float ydis = yhit.distance;
 
             WorkSpace.Set(transform.position.x + xdis, mCore.Sense.edgeCheckTrans.position.y - ydis);

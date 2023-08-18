@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a480cf2e5016404f95687b84bd4f7dc, type: 3}
+  m_Name: BluePig
+  m_EditorClassIdentifier: 
+  characterType: 1
+  GroundCheckRadius: 0.5
+  WallCheckDistance: 0.5
+  leftSidePoint: {fileID: 0}
+  rightSidePoint: {fileID: 0}
+  moveSpeed: 2
+  stayTime: 1
+  attackCoolDown: 0.5
+  maxHealthPoint: 3
+  animNames:
+  - animNames: Idle
+    animType: 0
+  - animNames: Walking
+    animType: 1
+  - animNames: Attacking
+    animType: 2
+  - animNames: Hurt
+    animType: 4
+  - animNames: Dying
+    animType: 5
+  - animNames: Smoke
+    animType: 3

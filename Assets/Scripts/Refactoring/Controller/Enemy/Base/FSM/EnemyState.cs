@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Refactoring.Controller.Enemy.FSM;
+﻿using Assets.Scripts.Refactoring.Controller.Enemy.Base.Core;
+using Assets.Scripts.Refactoring.Controller.Enemy.FSM;
+using Assets.Scripts.Refactoring.Model.Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +9,8 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.FSM {
     public class EnemyState {
         private EnemyStateMachine mStateMachine;
         protected EnemyController controller;
+        protected EnemyData_SO EnemyData;
+        protected EnemyCore core;
 
         protected string animParaName;
         protected float startTime;
@@ -16,9 +20,11 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.FSM {
             animParaName = animName;
         }
 
-        public EnemyState OnInit(EnemyStateMachine stateMachine, EnemyController enemyController) {
+        public EnemyState OnInit(EnemyStateMachine stateMachine, EnemyController enemyController, EnemyCore enemyCore) {
             mStateMachine = stateMachine;
             controller = enemyController;
+            core = enemyCore;
+            EnemyData = core.mEnemyData;
             return this;
         }
 

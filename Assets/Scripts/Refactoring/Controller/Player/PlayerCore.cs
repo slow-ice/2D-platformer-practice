@@ -41,9 +41,9 @@ public class PlayerCore : IController
     }
 
     #region Check Funcs
-    public bool CheckIfGrounded() {
-        return Physics2D.OverlapCircle(GroundCheck.position, PlayerData.GroundCheckRadius, PlayerData.GroundLayer);
-    }
+    //public bool CheckIfGrounded() {
+    //    return Physics2D.OverlapCircle(GroundCheck.position, PlayerData.GroundCheckRadius, PlayerData.GroundLayer);
+    //}
 
     public void CheckShouldFlip(int xInput) {
         if (xInput != 0 && xInput != FacingDirection) {
@@ -78,7 +78,10 @@ public class PlayerCore : IController
 
     public void Flip() {
         FacingDirection *= -1;
-        mPlayerTrans.Rotate(0f, 180f, 0f);
+        //mPlayerTrans.Rotate(0f, 180f, 0f);
+        var scale = mPlayerTrans.localScale;
+        scale.x *= -1;
+        mPlayerTrans.localScale = scale;
     }
 
     public IArchitecture GetArchitecture() {

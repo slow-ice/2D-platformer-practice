@@ -1,9 +1,10 @@
+using Assets.Scripts.Refactoring.Model.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Data/Player")]
-public class PlayerData_SO : ScriptableObject
+public class PlayerData_SO : CharacterData_SO
 {
     [Header("Move Params")]
     public float movementSpeed = 8f;
@@ -32,10 +33,10 @@ public class PlayerData_SO : ScriptableObject
     public Vector2 startOffset;
     public Vector2 endOffset;
 
-    [Header("Check Params")]
-    public LayerMask GroundLayer;
-    public float GroundCheckRadius;
-    public float WallCheckDistance = 0.5f;
+    //[Header("Check Params")]
+    //public LayerMask GroundLayer;
+    //public float GroundCheckRadius;
+    //public float WallCheckDistance = 0.5f;
 
     [Header("Wall Slide Params")]
     public float wallSlideSpeed = 3f;
