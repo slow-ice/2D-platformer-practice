@@ -14,12 +14,14 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base {
         protected Rigidbody2D mRigidbody;
 
         protected EnemyCore mCore;
-        [SerializeField]
-        protected EnemyData_SO mEnemyData;
+        public EnemyData_SO mEnemyData;
         protected EnemyStateMachine mStateMachine = new EnemyStateMachine();
         private IOCContainer mStateDic = new IOCContainer();
 
+        // 指定子类相应起始状态
         protected abstract EnemyState InitialState { get; }
+        // 指定子类相应Core, 在init component 中注册
+        protected abstract EnemyCore InitialCore { get; }
 
         public void OnInit() {
             InitializeComponent();
@@ -31,7 +33,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base {
             OnInit();
         }
 
-        void Update() {
+        protected virtual void Update() {
             mStateMachine.OnUpdate();
         }
 
@@ -39,10 +41,14 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base {
             mStateMachine.OnFixedUpdate();
         }
 
-        protected void InitializeComponent() {
+        public virtual void InitializeComponent() {
             mAnimator = GetComponent<Animator>();
             mRigidbody = GetComponent<Rigidbody2D>();
-            mCore = new EnemyCore();
+            RegisterCore(InitialCore);
+        }
+
+        private void RegisterCore(EnemyCore enemyCore) {
+            mCore = enemyCore;
             mCore.SetController(this)
                 .SetAnimator(mAnimator)
                 .SetRigibody(mRigidbody)

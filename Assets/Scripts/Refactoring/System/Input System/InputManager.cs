@@ -46,6 +46,8 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
 
 
         public bool[] AttackInputs;
+        public bool Attack { get; private set; }
+
 
         private void Start() {
             player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -81,11 +83,15 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
             AttackInputs[(int)CombatInputs.Secondary] = true;
 
 
-        private void ResetPrimaryAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        private void ResetPrimaryAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+            Attack = false;
             AttackInputs[(int)CombatInputs.Primary] = false;
+        }
 
-        private void OnPrimaryAttackInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        private void OnPrimaryAttackInput(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
+            Attack = true;
             AttackInputs[(int)CombatInputs.Primary] = true;
+        }
 
 
         private void OnDashButtonUp(UnityEngine.InputSystem.InputAction.CallbackContext obj) {

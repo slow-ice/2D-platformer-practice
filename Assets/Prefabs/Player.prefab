@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6967768037633921500}
   - component: {fileID: 6967768037633921475}
   - component: {fileID: 6967768037633921474}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -224,6 +224,7 @@ MonoBehaviour:
   groundCheckTrans: {fileID: 6967768039618734001}
   wallCheckTrans: {fileID: 6967768039562006057}
   edgeCheckTrans: {fileID: 6967768039128672539}
+  CharacterData: {fileID: 11400000, guid: f3f9527db0566744c98a026f44b8a34c, type: 2}
 --- !u!1 &6967768038505814078
 GameObject:
   m_ObjectHideFlags: 0

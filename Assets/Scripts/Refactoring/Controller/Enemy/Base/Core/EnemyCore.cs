@@ -3,6 +3,7 @@ using Assets.Scripts.Refactoring.Model.Enemy;
 using QFramework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
     public class EnemyCore : IController {
@@ -10,10 +11,13 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
         public Animator mAnimator { get; private set; }
         public Rigidbody2D mRigidbody { get; private set; }
 
-        private EnemyController mController;
+        protected EnemyController mController;
         public EnemyData_SO mEnemyData;
 
         private Dictionary<EnemyAnimType, int> mAnimDic = new ();
+
+        public int FacingDirection;
+        public Transform mPlayerTrans { get; private set; }
 
         /// <summary>
         /// 播放动画
@@ -36,11 +40,65 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
             return mAnimDic[type];
         }
 
+        public void SetAnimatorSpeed(float speed) {
+            mAnimator.speed = speed;
+        }
+
+        public bool IsAnimationOver() {
+            var animInfo = mAnimator.GetCurrentAnimatorStateInfo(0);
+            return animInfo.normalizedTime > 0.99f;
+        }
+
+        public bool DetectPlayer() {
+            var rayInfo = Physics2D.Raycast(mController.transform.position, mController.transform.localScale,
+                mEnemyData.detectDistance, LayerMask.GetMask("Player"));
+            if (rayInfo.collider != null) {
+                Debug.Log("Player Detected!");
+                mPlayerTrans = rayInfo.collider.transform;
+                return true;
+            }
+            return false;
+        }
+
+        private void MoveWithSpeed(float speed) {
+            if (speed > 0 && mController.transform.localScale.x < 0) {
+                Flip();
+            }
+            else if (speed < 0 && mController.transform.localScale.x > 0) {
+                Flip();
+            }
+            SetVelocity(speed);
+        }
+
+        public void MoveToTarget(Vector3 target) {
+            if (target.x > mController.transform.position.x) {
+                MoveWithSpeed(mEnemyData.moveSpeed);
+            }
+            else if (target.x < mController.transform.position.x) {
+                MoveWithSpeed(-mEnemyData.moveSpeed);
+            }
+        }
+
+        public void MoveToTarget(Vector3 target, float speed) {
+            if (target.x > mController.transform.position.x) {
+                MoveWithSpeed(speed);
+            }
+            else if (target.x < mController.transform.position.x) {
+                MoveWithSpeed(-speed);
+            }
+        }
 
         public void SetVelocity(float speed) {
             var curVelo = mRigidbody.velocity;
             curVelo.x = speed;
             mRigidbody.velocity = curVelo;
+        }
+
+
+        public void Flip() {
+            var scale = mController.transform.localScale;
+            scale.x *= -1;
+            mController.transform.localScale = scale;
         }
 
         #region Init Funcs

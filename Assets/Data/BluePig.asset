@@ -15,11 +15,13 @@ MonoBehaviour:
   characterType: 1
   GroundCheckRadius: 0.5
   WallCheckDistance: 0.5
-  leftSidePoint: {fileID: 0}
-  rightSidePoint: {fileID: 0}
   moveSpeed: 2
+  chaseSpeed: 5
+  chaseAnimSpeed: 2
   stayTime: 1
   attackCoolDown: 0.5
+  detectDistance: 10
+  attackRange: 4.25
   maxHealthPoint: 3
   animNames:
   - animNames: Idle

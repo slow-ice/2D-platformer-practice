@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.FSM {
     public class EnemyState {
-        private EnemyStateMachine mStateMachine;
+        protected EnemyStateMachine mStateMachine;
         protected EnemyController controller;
         protected EnemyData_SO EnemyData;
         protected EnemyCore core;

@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Refactoring.Model.Player {
 
-    public class PlayerModel : AbstractModel {
+    public interface IPlayerModel : IModel { }
+
+    public class PlayerModel : AbstractModel, IPlayerModel {
         PlayerData_SO PlayerData;
 
         protected override void OnInit() {
