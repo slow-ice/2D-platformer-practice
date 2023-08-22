@@ -1,7 +1,9 @@
 ﻿
 
+using Assets.Scripts.Refactoring.Controller.Enemy.Base;
 using Assets.Scripts.Refactoring.Event;
 using Assets.Scripts.Refactoring.Model.Enemy;
+using Assets.Scripts.Refactoring.Model.Player;
 using QFramework;
 using UnityEngine;
 
@@ -21,6 +23,12 @@ namespace Assets.Scripts.Refactoring.System.Battle_System {
                         data.Health.Value -= 1;
                     }
                 }
+            });
+
+            this.RegisterEvent<EnemyDieEvent>(e => {
+                var controller = e.transform.GetComponent<EnemyController>();
+                this.GetModel<IEnemyModel>().RemoveEnemy(e.transform);
+                controller.Die();
             });
         }
     }

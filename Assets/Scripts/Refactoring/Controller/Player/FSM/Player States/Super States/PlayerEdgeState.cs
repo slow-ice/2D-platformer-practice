@@ -26,7 +26,7 @@ public class PlayerEdgeState : PlayerState {
     public override void OnEnter() {
         base.OnEnter();
 
-        controller.SetVelocity(0);
+        controller.SetVelocityToZero(0);
         controller.transform.position = detectedPos;
 
         cornerPos = controller.GetCornerPos();
@@ -71,7 +71,7 @@ public class PlayerEdgeState : PlayerState {
         }
 
         controller.transform.position = startPos;
-        controller.SetVelocity(0);
+        controller.SetVelocityToZero(0);
 
         if (yInput == -1 && !isClimbing) {
             stateMachine.ChangeState(controller.GetState<PlayerInAirState>());

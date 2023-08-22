@@ -14,6 +14,8 @@ public class PlayerGroundState : PlayerState {
     protected bool changeToJump;
     private bool dashInput;
 
+    protected bool isStateOver;
+
     public PlayerGroundState(string animName) :base(animName) { }
 
     public override void DoChecks() {
@@ -26,6 +28,7 @@ public class PlayerGroundState : PlayerState {
         base.OnEnter();
 
         changeToJump = false;
+        isStateOver = false;
 
         controller.GetState<PlayerJumpState>().ResetJumpLeft();
         controller.GetState<PlayerDashState>().ResetCanDash();
@@ -43,11 +46,14 @@ public class PlayerGroundState : PlayerState {
         dashInput = InputManager.Instance.DashInput;
 
         if (InputManager.Instance.AttackInputs[(int)CombatInputs.Primary]) {
+            isStateOver = true;
+            controller.GetState<PlayerAttackState>().UseAttackInput();
             stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
             return;
         }
 
         if (InputManager.Instance.AttackInputs[(int)(CombatInputs.Secondary)]) {
+            isStateOver = true;
             stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
             return;
         }

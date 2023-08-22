@@ -71,6 +71,14 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base {
             return mStateDic.Get<TState>();
         }
 
+        public void Die() {
+            mCore.Die();
+        }
+
+        public void DestroySelf() {
+            Destroy(gameObject);
+        }
+
         public IArchitecture GetArchitecture() {
             return GameCenter.Interface;
         }

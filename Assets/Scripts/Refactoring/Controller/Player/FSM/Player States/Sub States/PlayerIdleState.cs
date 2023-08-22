@@ -12,7 +12,7 @@ public class PlayerIdleState : PlayerGroundState {
     public override void OnEnter() {
         base.OnEnter();
 
-        controller.SetVelocity(0f);
+        controller.SetVelocityToZero(0f);
     }
 
     public override void OnExit() {

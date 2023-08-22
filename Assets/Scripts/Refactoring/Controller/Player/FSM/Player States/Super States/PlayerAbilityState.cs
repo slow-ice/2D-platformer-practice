@@ -7,7 +7,6 @@ public class PlayerAbilityState : PlayerState {
 
     protected bool isAbilityDone;
     protected bool isGrounded;
-    protected int xInput;
 
     public PlayerAbilityState(string animParmName) : base(animParmName) { }
 
@@ -29,8 +28,6 @@ public class PlayerAbilityState : PlayerState {
 
     public override void OnUpdate() {
         base.OnUpdate();
-
-        xInput = InputManager.Instance.xInput;
 
         if (isAbilityDone) {
             if (isGrounded && controller.CurrentVelocity.y < 0.1f) {

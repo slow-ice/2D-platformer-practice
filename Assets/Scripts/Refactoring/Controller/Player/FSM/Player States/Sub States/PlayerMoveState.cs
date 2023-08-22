@@ -23,6 +23,9 @@ public class PlayerMoveState : PlayerGroundState {
         if (changeToJump) {
             return;
         }
+        if (isStateOver) {
+            return;
+        }
 
         core.CheckShouldFlip(xInput);
 

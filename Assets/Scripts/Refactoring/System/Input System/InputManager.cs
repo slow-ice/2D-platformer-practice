@@ -46,7 +46,7 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
 
 
         public bool[] AttackInputs;
-        public bool Attack { get; private set; }
+        public bool Attack { get; set; }
 
 
         private void Start() {

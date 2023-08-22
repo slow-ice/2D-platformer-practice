@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Refactoring.Controller.Enemy.Base.FSM;
 using Assets.Scripts.Refactoring.Controller.Enemy.BluePig;
+using Assets.Scripts.Refactoring.Controller.Enemy.BluePig.State;
 using UnityEngine;
 
 namespace Assets.Scripts.Refactoring.Controller.Enemy {
@@ -13,7 +14,17 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
 
         protected Vector3 curTargetPos;
 
+        public bool IsHeavilyHit;
+
         public BluePigBaseState(string animName) : base(animName) {
+        }
+
+        public override void OnUpdate() {
+            base.OnUpdate();
+
+            if (core.IsDead) {
+                ChangeState<BluePigDie>();
+            }
         }
 
         public void SetPatrolTarget(bool isMoveToLeft) {
@@ -23,6 +34,10 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
             else {
                 curTargetPos = (controller as BluePigController).rightPointPos;
             }
+        }
+
+        public void SetHitTrigger() {
+            IsHeavilyHit = true;
         }
     }
 }

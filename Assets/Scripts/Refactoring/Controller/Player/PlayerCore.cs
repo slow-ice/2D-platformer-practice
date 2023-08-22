@@ -60,6 +60,14 @@ public class PlayerCore : IController
         return false;
     }
 
+    public bool IsCurrentAnimOver() {
+        var AnimatorInfo = mAnimator.GetCurrentAnimatorStateInfo(0);
+        if (AnimatorInfo.normalizedTime > 0.99f) {
+            return true;
+        }
+        return false;
+    }
+
     public bool AnimationTrigger(string animName) {
         var AnimatorInfo = mAnimator.GetCurrentAnimatorStateInfo(0);
         if (AnimatorInfo.IsName(animName)) {

@@ -1,4 +1,5 @@
 using Assets.Scripts.Refactoring.Architecture;
+using Assets.Scripts.Refactoring.Controller.Weapon;
 using Assets.Scripts.Refactoring.Model.Player;
 using QFramework;
 using System;
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Refactoring {
         public PlayerStateMachine StateMachine = new PlayerStateMachine();
         private IOCContainer mStateDic = new IOCContainer();
         public PlayerData_SO PlayerData;
+        public WeaponController weaponController;
 
         public Transform DashIndicator;
 
@@ -38,6 +40,8 @@ namespace Assets.Scripts.Refactoring {
 
             mCore = new PlayerCore();
             mCore.InitCore(transform);
+
+            weaponController = GetComponentInChildren<WeaponController>();
         }
 
         private void InitializeFSM() {
@@ -68,6 +72,10 @@ namespace Assets.Scripts.Refactoring {
 
         void Start() {
             StateMachine.Initialize(GetState<PlayerIdleState>());
+
+            this.GetModel<IPlayerModel>().RegisterPlayer(transform);
+            
+            GetState<PlayerAttackState>().SetWeaponController(weaponController);
         }
 
 
@@ -105,7 +113,7 @@ namespace Assets.Scripts.Refactoring {
         /// Set velocity to zero
         /// </summary>
         /// <param name="velo"></param>
-        public void SetVelocity(float velo) {
+        public void SetVelocityToZero(float velo) {
             if (velo != 0) {
                 return;
             }

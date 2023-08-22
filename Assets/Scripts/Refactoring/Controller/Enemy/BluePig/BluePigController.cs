@@ -18,7 +18,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig {
         protected override void Update() {
             base.Update();
             if (Input.GetKeyDown(KeyCode.K)) {
-                this.SendCommand(new TryAttackCommand(transform, 1));
+                this.SendCommand(new AttackEnemyCommand(transform, 1));
             }
         }
 
@@ -27,6 +27,8 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig {
             RegisterState<BluePigPatrolState>(new BluePigPatrolState("Patrol"));
             RegisterState<BluePigChase>(new BluePigChase("Chase"));
             RegisterState<BluePigAttack>(new BluePigAttack("Attack"));
+            RegisterState<BluePigStunState>(new BluePigStunState("Stun"));
+            RegisterState<BluePigDie>(new BluePigDie("Die"));
 
             GetState<BluePigIdle>().SetPatrolTarget(true);
             mStateMachine.OnInit(InitialState);

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackEvent
+public class PlayerAttackEvent
 {
     public int attackIndex;
 
-    public AttackEvent(int attackIndex) {
+    public PlayerAttackEvent(int attackIndex) {
         this.attackIndex = attackIndex;
     }
 }

@@ -17,7 +17,12 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
         private Dictionary<EnemyAnimType, int> mAnimDic = new ();
 
         public int FacingDirection;
+
+        public bool IsDead = false;
+
         public Transform mPlayerTrans { get; private set; }
+
+        #region Anim Funcs
 
         /// <summary>
         /// 播放动画
@@ -49,11 +54,16 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
             return animInfo.normalizedTime > 0.99f;
         }
 
+        #endregion
+
+        public void Die() {
+            IsDead = true;
+        }
+
         public bool DetectPlayer() {
             var rayInfo = Physics2D.Raycast(mController.transform.position, mController.transform.localScale,
                 mEnemyData.detectDistance, LayerMask.GetMask("Player"));
             if (rayInfo.collider != null) {
-                Debug.Log("Player Detected!");
                 mPlayerTrans = rayInfo.collider.transform;
                 return true;
             }

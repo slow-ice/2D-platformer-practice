@@ -8,6 +8,9 @@ using UnityEngine;
 namespace Assets.Scripts.Refactoring.Model.Enemy {
     public interface IEnemyModel : IModel {
         Dictionary<Transform, EnemyRunTimeData> EnemyDic { get; }
+        EnemyRunTimeData GetEnemy(Transform target);
+
+        void RemoveEnemy(Transform target);
     }
 
     public class EnemyModel : AbstractModel, IEnemyModel {
@@ -44,6 +47,12 @@ namespace Assets.Scripts.Refactoring.Model.Enemy {
             }
             Debug.LogWarning("enemy transform not registered");
             return null;
+        }
+
+        public void RemoveEnemy(Transform target) { 
+            if (EnemyDic.ContainsKey(target)) {
+                EnemyDic.Remove(target);
+            }
         }
     }
 }

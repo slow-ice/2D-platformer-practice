@@ -1,9 +1,10 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Refactoring.Model.Weapon {
-    public class WeaponData_SO : ScriptableObject {
+    public abstract class WeaponData_SO : ScriptableObject {
         [Header("Attribute")]
         public WeaponType weaponType;
         public enum WeaponType {
@@ -11,7 +12,12 @@ namespace Assets.Scripts.Refactoring.Model.Weapon {
         }
 
         [Header("Animation")]
-        public List<(string, string)> animList = new List<(string, string)> ();
+        public List<TwinAnimList> animList = new ();
+        [Serializable]
+        public struct TwinAnimList {
+            public string baseAnim;
+            public string bodyAnim;
+        }
 
         [Header("Damage")]
         public int Damage;

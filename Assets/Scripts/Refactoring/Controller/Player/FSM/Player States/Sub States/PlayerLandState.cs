@@ -30,7 +30,7 @@ public class PlayerLandState : PlayerGroundState {
         }
 
         if (xInput == 0) {
-            controller.SetVelocity(0);
+            controller.SetVelocityToZero(0);
         }
 
         if (core.CheckAnimFinished(animName)) {
