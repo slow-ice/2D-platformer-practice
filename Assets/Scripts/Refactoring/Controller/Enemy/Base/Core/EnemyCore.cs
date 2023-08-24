@@ -19,6 +19,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
         public int FacingDirection;
 
         public bool IsDead = false;
+        public bool IsHurt = false;
 
         public Transform mPlayerTrans { get; private set; }
 
@@ -58,6 +59,10 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
 
         public void Die() {
             IsDead = true;
+        }
+
+        public void Hurt() {
+            IsHurt = true;
         }
 
         public bool DetectPlayer() {

@@ -18,10 +18,13 @@ namespace Assets.Scripts.Refactoring.System.Battle_System {
                 if (model.EnemyDic.TryGetValue(e.enmeyTrans, out var data)) {
                     if (data == null) {
                         Debug.LogWarning("data is null");
+                        return;
                     }
-                    else {
-                        data.Health.Value -= 1;
+
+                    if (e.IsHeavyHit) {
+                        e.enmeyTrans.GetComponent<EnemyController>().HeavyHurt();
                     }
+                    data.Health.Value -= e.damage;
                 }
             });
 

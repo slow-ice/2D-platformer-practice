@@ -20,6 +20,7 @@ namespace Assets.Scripts.Refactoring.Model.Weapon {
         }
 
         [Header("Damage")]
-        public int Damage;
+        public int NormalDamage = 1;
+        public int HeavyHitDamage = 2;
     }
 }

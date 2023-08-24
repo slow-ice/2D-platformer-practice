@@ -15,7 +15,10 @@ namespace Assets.Scripts.Refactoring.System.Battle_System {
                 weaponController.HitBox.enabled = true;
             });
 
-           
+            this.RegisterEvent<PlayerHeavyAttackEvent>(e => {
+                e.EnemyController.HeavyHurt();
+
+            });
         }
     }
 }

@@ -13,6 +13,21 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig.State {
             base.OnEnter();
 
             core.PlayAnim(Base.Core.EnemyAnimType.Hurt);
+            core.IsHurt = false;
+        }
+
+        public override void OnUpdate() {
+            base.OnUpdate();
+
+            if (core.IsAnimationOver()) {
+                if (core.IsDead) {
+                    ChangeState<BluePigDie>();
+                    return;
+                }
+
+                ChangeState<BluePigChase>();
+                return;
+            }
         }
     }
 }

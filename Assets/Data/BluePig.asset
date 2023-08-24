@@ -22,7 +22,7 @@ MonoBehaviour:
   attackCoolDown: 0.5
   detectDistance: 10
   attackRange: 4.25
-  maxHealthPoint: 3
+  maxHealthPoint: 10
   animNames:
   - animNames: Idle
     animType: 0

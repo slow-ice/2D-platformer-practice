@@ -74,6 +74,10 @@ public class PlayerAttackState : PlayerAbilityState {
         controller.SetVelocityX(speed * core.FacingDirection);
     }
 
+    public bool IsLastHit() {
+        return attackCount >= 2;
+    }
+
     public void SetWeaponController(WeaponController weaponController) {
         this.weaponController = weaponController;
     }

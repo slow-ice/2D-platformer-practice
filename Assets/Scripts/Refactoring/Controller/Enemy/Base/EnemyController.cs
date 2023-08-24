@@ -75,6 +75,10 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base {
             mCore.Die();
         }
 
+        public void HeavyHurt() {
+            mCore.Hurt();
+        }
+
         public void DestroySelf() {
             Destroy(gameObject);
         }

@@ -14,8 +14,6 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
 
         protected Vector3 curTargetPos;
 
-        public bool IsHeavilyHit;
-
         public BluePigBaseState(string animName) : base(animName) {
         }
 
@@ -24,6 +22,11 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
 
             if (core.IsDead) {
                 ChangeState<BluePigDie>();
+                return;
+            }
+
+            if (core.IsHurt && !core.IsDead) {
+                ChangeState<BluePigStunState>();
             }
         }
 
@@ -36,8 +39,5 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
             }
         }
 
-        public void SetHitTrigger() {
-            IsHeavilyHit = true;
-        }
     }
 }

@@ -136,7 +136,6 @@ namespace Assets.Scripts.Refactoring {
 
             WorkSpace.Set(transform.position.x + xdis, mCore.Sense.edgeCheckTrans.position.y - ydis);
 
-            Debug.Log($"coner position: {WorkSpace}");
             return WorkSpace;
         }
 

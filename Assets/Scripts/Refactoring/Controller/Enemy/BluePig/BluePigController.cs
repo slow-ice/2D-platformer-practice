@@ -18,7 +18,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig {
         protected override void Update() {
             base.Update();
             if (Input.GetKeyDown(KeyCode.K)) {
-                this.SendCommand(new AttackEnemyCommand(transform, 1));
+                this.SendCommand(new AttackEnemyCommand(transform));
             }
         }
 
