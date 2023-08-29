@@ -4,6 +4,7 @@ using Assets.Scripts.Refactoring.Architecture;
 using Assets.Scripts.Refactoring.Command;
 using Assets.Scripts.Refactoring.Event;
 using Assets.Scripts.Refactoring.Model.Weapon;
+using Assets.Scripts.Refactoring.System.Battle_System;
 using QFramework;
 using UnityEngine;
 
@@ -53,8 +54,14 @@ namespace Assets.Scripts.Refactoring.Controller.Weapon {
             var boxPos = HitBox.offset + new Vector2(transform.position.x, transform.position.y);
             var collision = Physics2D.OverlapBox(boxPos, HitBox.size, 0, LayerMask.GetMask("Enemy"));
             if (collision != null) {
-                this.SendCommand(new AttackEnemyCommand(collision.transform));
-                HasAttacked = true;
+
+                IDamageable attackTarget = collision.GetComponent<IDamageable>();
+                if (attackTarget == null) { 
+                    attackTarget = collision.GetComponentInParent<IDamageable>();
+                }
+                attackTarget?.Hurt(controller => {
+                    HasAttacked = true;
+                });
             }
         }
 

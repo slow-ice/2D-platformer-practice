@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Refactoring;
+using Assets.Scripts.Refactoring.Controller.Player.FSM.Player_States.Sub_States;
 using Assets.Scripts.Refactoring.System.Input_System;
 using UnityEngine;
 
@@ -55,6 +56,11 @@ public class PlayerGroundState : PlayerState {
         if (InputManager.Instance.AttackInputs[(int)(CombatInputs.Secondary)]) {
             isStateOver = true;
             stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
+            return;
+        }
+
+        if (core.IsHurt) {
+            stateMachine.ChangeState(controller.GetState<PlayerHurtState>());
             return;
         }
 

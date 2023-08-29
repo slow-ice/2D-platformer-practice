@@ -12,6 +12,7 @@ namespace Assets.Scripts.Refactoring.Architecture {
             RegisterModel<IEnemyModel>(new EnemyModel());
 
             RegisterSystem<IEnemyBattleSystem>(new EnemyBattleSystem());
+            RegisterSystem<IPlayerBattleSystem>(new PlayerBattleSystem());
         }
     }
 }

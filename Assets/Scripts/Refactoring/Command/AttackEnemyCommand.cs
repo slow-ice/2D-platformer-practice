@@ -7,6 +7,10 @@ namespace Assets.Scripts.Refactoring.Command {
     public class AttackEnemyCommand : AbstractCommand {
         private Transform targetEnemyTrans;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transform">Enemy transform</param>
         public AttackEnemyCommand(Transform transform) {
             this.targetEnemyTrans = transform;
         }

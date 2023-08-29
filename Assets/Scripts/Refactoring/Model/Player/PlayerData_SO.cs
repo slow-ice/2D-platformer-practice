@@ -6,6 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "Data/Player")]
 public class PlayerData_SO : CharacterData_SO
 {
+    [Header("Health")]
+    public int health = 6;
+    public float hurtForce = 3f;
+    public float hurtTime = 0.5f;
+
     [Header("Move Params")]
     public float movementSpeed = 8f;
 
@@ -14,10 +19,11 @@ public class PlayerData_SO : CharacterData_SO
     public float jumpPressedWindow = 0.5f;
     public int fallGravityScale;
     public int gravityScale;
+    public float wallJumpTimer = 0.3f;
     public float coyoteTime;
 
     [Header("Wall Jump Params")]
-    public float wallJumpForce = 16f;
+    public float wallJumpForce = 24f;
     public Vector2 wallJumpDirection = new Vector2(1, 2);
 
     [Header("Dash Params")]

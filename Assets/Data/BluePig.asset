@@ -19,9 +19,11 @@ MonoBehaviour:
   chaseSpeed: 5
   chaseAnimSpeed: 2
   stayTime: 1
-  attackCoolDown: 0.5
+  attackCoolDown: 1
   detectDistance: 10
-  attackRange: 4.25
+  attackRange: 2.7
+  normalAttackDamage: 1
+  heavyAttackDamage: 2
   maxHealthPoint: 10
   animNames:
   - animNames: Idle

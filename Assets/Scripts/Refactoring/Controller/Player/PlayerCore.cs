@@ -21,8 +21,12 @@ public class PlayerCore : IController
     #endregion
 
     public int FacingDirection = 1;
+    public int HurtDirection { get; set; } = 1;
     public int amountOfJumpLeft;
     public int amountOfJump { get; private set; }
+
+    public bool IsDead = false;
+    public bool IsHurt = false;
 
     public PlayerCore InitCore(Transform player) {
         mPlayerTrans = player;
@@ -90,6 +94,15 @@ public class PlayerCore : IController
         var scale = mPlayerTrans.localScale;
         scale.x *= -1;
         mPlayerTrans.localScale = scale;
+    }
+
+    public void Die(Action callback) {
+        IsDead = true;
+        callback?.Invoke();
+    }
+
+    public void Hurt() {
+        IsHurt = true;
     }
 
     public IArchitecture GetArchitecture() {

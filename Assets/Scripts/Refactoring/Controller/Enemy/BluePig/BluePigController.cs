@@ -15,12 +15,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig {
         public Vector3 leftPointPos;
         public Vector3 rightPointPos;
 
-        protected override void Update() {
-            base.Update();
-            if (Input.GetKeyDown(KeyCode.K)) {
-                this.SendCommand(new AttackEnemyCommand(transform));
-            }
-        }
+        public Vector2 curTargetPos;
 
         protected override void InitializeFSM() {
             RegisterState<BluePigIdle>(new BluePigIdle("Idle"));

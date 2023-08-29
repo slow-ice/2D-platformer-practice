@@ -25,29 +25,25 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig.State {
                 return;
             }
 
-            if (isOnTarget && !IsOnLeft && !IsOnRight) {
-                isOnTarget = false;
-            }
-
-            if (IsOnLeft && !isOnTarget) {
-                isOnTarget = true;
+            if (IsOnLeft && IsTargetOnLeft()) {
                 SetPatrolTarget(false);
                 GetState<BluePigIdle>().SetStayTime(EnemyData.stayTime);
                 ChangeState<BluePigIdle>();
                 return;
             }
 
-            if (IsOnRight && !isOnTarget) {
-                isOnTarget = true;
+            if (IsOnRight && !IsTargetOnLeft()) {
                 SetPatrolTarget(true);
                 GetState<BluePigIdle>().SetStayTime(EnemyData.stayTime);
                 ChangeState<BluePigIdle>();
                 return;
             }
 
-            core.MoveToTarget(curTargetPos);
+            core.MoveToTarget((controller as BluePigController).curTargetPos);
         }
 
-        
+        bool IsTargetOnLeft() {
+            return (controller as BluePigController).curTargetPos == (Vector2)(controller as BluePigController).leftPointPos;
+        }
     }
 }

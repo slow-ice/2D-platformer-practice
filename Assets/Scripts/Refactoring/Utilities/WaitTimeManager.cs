@@ -19,10 +19,11 @@ public class WaitTimeManager {
     }
 
     static IEnumerator coroutine(float time, Action callback) {
-        Debug.Log("Start Wait Time");
+        //Debug.Log("Start Wait Time");
         yield return new WaitForSeconds(time);
-        Debug.Log("Wait Time end");
+        //Debug.Log("Wait Time end");
         callback?.Invoke();
+        yield break;
     }
 
     class TaskBehaviour : MonoBehaviour { }

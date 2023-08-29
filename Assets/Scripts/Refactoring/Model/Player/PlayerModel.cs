@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Refactoring.Event;
+using Assets.Scripts.Refactoring.System.Input_System;
 using QFramework;
 using System.Collections;
 using UnityEngine;
@@ -31,7 +32,8 @@ namespace Assets.Scripts.Refactoring.Model.Player {
         public PlayerData_SO PlayerData { get; private set; }
 
         protected override void OnInit() {
-            Health.Register(newValue => {
+            Health.RegisterWithInitValue(newValue => {
+                Debug.Log("Player Current Health: " + newValue);
                 if (newValue <= 0) {
                     this.SendEvent<PlayerDieEvent>();
                 }

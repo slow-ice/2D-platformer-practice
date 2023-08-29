@@ -1,9 +1,11 @@
 ﻿using Assets.Scripts.Refactoring.Architecture;
+using Assets.Scripts.Refactoring.Command;
 using Assets.Scripts.Refactoring.Model.Enemy;
+using Assets.Scripts.Refactoring.System.Battle_System;
+using Assets.Scripts.Refactoring.Utilities;
 using QFramework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
     public class EnemyCore : IController {
@@ -20,6 +22,8 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
 
         public bool IsDead = false;
         public bool IsHurt = false;
+
+        public float lastAttackTime;
 
         public Transform mPlayerTrans { get; private set; }
 
@@ -65,8 +69,51 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
             IsHurt = true;
         }
 
+        public bool IsAttackCoolDown() {
+            if (Time.time > lastAttackTime + mEnemyData.attackCoolDown) {
+                return true;
+            }
+            return false;
+        }
+
+        public void AttackPlayer() {
+            if (!mController.HitBox.isActiveAndEnabled)
+                return;
+            var mTrans = mController.transform;
+            var boxPos = new Vector2(mTrans.position.x + mController.HitBox.offset.x * mTrans.localScale.x,
+                mTrans.position.y + mController.HitBox.offset.y);
+            var collision = Physics2D.OverlapBox(boxPos, mController.HitBox.size, 0, LayerMask.GetMask("Player"));
+            if (collision != null) {
+
+                IDamageable attackTarget = collision.GetComponent<IDamageable>();
+                if (attackTarget == null) {
+                    attackTarget = collision.GetComponentInParent<IDamageable>();
+                }
+
+                attackTarget?.Hurt(controller => {
+                    var player = controller as PlayerController;
+                    player.mCore.HurtDirection = mController.transform.position.x > player.transform.position.x ? -1 : 1;
+                    controller.SendCommand(new AttackPlayerCommand(mController.transform));
+                });
+            }
+        }
+
         public bool DetectPlayer() {
-            var rayInfo = Physics2D.Raycast(mController.transform.position, mController.transform.localScale,
+            var forward = new Vector2(mController.transform.localScale.x, 0);
+            Debug.DrawRay(mController.transform.realPosition(), forward * mEnemyData.detectDistance, Color.red);
+            var rayInfo = Physics2D.Raycast(mController.transform.realPosition(), forward,
+                mEnemyData.detectDistance, LayerMask.GetMask("Player"));
+            if (rayInfo.collider != null) {
+                mPlayerTrans = rayInfo.collider.transform;
+                return true;
+            }
+            return false;
+        }
+
+        public bool DetectPlayerBack() {
+            var back = new Vector2(-mController.transform.localScale.x, 0);
+            Debug.DrawRay(mController.transform.realPosition(), back * mEnemyData.detectDistance, Color.green);
+            var rayInfo = Physics2D.Raycast(mController.transform.realPosition(), back,
                 mEnemyData.detectDistance, LayerMask.GetMask("Player"));
             if (rayInfo.collider != null) {
                 mPlayerTrans = rayInfo.collider.transform;
@@ -86,7 +133,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
         }
 
         public void MoveToTarget(Vector3 target) {
-            if (target.x > mController.transform.position.x) {
+            if (target.x >= mController.transform.position.x) {
                 MoveWithSpeed(mEnemyData.moveSpeed);
             }
             else if (target.x < mController.transform.position.x) {
@@ -95,7 +142,7 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
         }
 
         public void MoveToTarget(Vector3 target, float speed) {
-            if (target.x > mController.transform.position.x) {
+            if (target.x >= mController.transform.position.x) {
                 MoveWithSpeed(speed);
             }
             else if (target.x < mController.transform.position.x) {
@@ -106,9 +153,20 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.Core {
         public void SetVelocity(float speed) {
             var curVelo = mRigidbody.velocity;
             curVelo.x = speed;
+            curVelo.y = 0;
             mRigidbody.velocity = curVelo;
         }
 
+        public void CheckShouldFlip(Transform target) {
+            var pos = mController.transform.position;
+            var scale = mController.transform.localScale;
+            if (target.position.x < pos.x && scale.x > 0) {
+                Flip();
+            }
+            else if (target.position.x >= pos.x && scale.x < 0) {
+                Flip();
+            }
+        }
 
         public void Flip() {
             var scale = mController.transform.localScale;

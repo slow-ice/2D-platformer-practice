@@ -31,7 +31,7 @@ public abstract class PlayerState
         DoChecks();
         startTime = Time.time;
         core.mAnimator.SetBool(animParmName, true);
-        Debug.Log($"State: {animParmName}");
+        //Debug.Log($"State: {animParmName}");
     }
 
     public virtual void OnExit() {

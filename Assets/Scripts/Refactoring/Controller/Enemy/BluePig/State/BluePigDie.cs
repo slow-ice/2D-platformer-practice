@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig.State {
     public class BluePigDie : BluePigBaseState {
+        private bool isDead = false;
+
         public BluePigDie(string animName) : base(animName) {
         }
 
@@ -18,8 +20,11 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.BluePig.State {
         public override void OnUpdate() {
             base.OnUpdate();
 
-            if (core.IsAnimationOver()) {
-                controller.DestroySelf();
+            if (core.IsAnimationOver() && !isDead) {
+                core.mAnimator.speed = 0;
+                isDead = true;
+                WaitTimeManager.WaitTime(1.5f, () => controller.DestroySelf());
+                //controller.DestroySelf();
             }
         }
     }

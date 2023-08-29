@@ -12,7 +12,6 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
             ((BluePigController)controller).rightPointPos) < 0.3f;
         protected bool IsAttackOver;
 
-        protected Vector3 curTargetPos;
 
         public BluePigBaseState(string animName) : base(animName) {
         }
@@ -32,10 +31,10 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy {
 
         public void SetPatrolTarget(bool isMoveToLeft) {
             if (isMoveToLeft) {
-                curTargetPos = (controller as BluePigController).leftPointPos;
+                (controller as BluePigController).curTargetPos = (controller as BluePigController).leftPointPos;
             }
             else {
-                curTargetPos = (controller as BluePigController).rightPointPos;
+                (controller as BluePigController).curTargetPos = (controller as BluePigController).rightPointPos;
             }
         }
 

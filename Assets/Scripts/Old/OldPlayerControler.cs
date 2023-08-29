@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControler : MonoBehaviour
+public class OldPlayerControler : MonoBehaviour
 {
     public float movSpeed = 10f;
     private float movDirection;

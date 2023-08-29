@@ -7019,9 +7019,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 630882912, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 630882912, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 630882912, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1368241757103410, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
       propertyPath: m_Name
       value: Blue Pig
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133360458253608, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -77.27916
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188420602454700, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 101.20764
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582565886771234, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 152.33142
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730404313984200, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -55.715458
       objectReference: {fileID: 0}
     - target: {fileID: 4763991345485350, guid: 3d6a25ee244126c46b7dc7f1454f5893, type: 3}
       propertyPath: m_RootOrder

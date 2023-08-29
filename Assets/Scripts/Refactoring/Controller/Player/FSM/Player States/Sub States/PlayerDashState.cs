@@ -34,11 +34,15 @@ public class PlayerDashState : PlayerAbilityState {
         Time.timeScale = controller.PlayerData.dashTimeScale;
         startTime = Time.unscaledTime;
 
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+
         controller.DashIndicator.gameObject.SetActive(true);
     }
 
     public override void OnExit() {
         base.OnExit();
+
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
 
         isHolding = false;
         Time.timeScale = 1;

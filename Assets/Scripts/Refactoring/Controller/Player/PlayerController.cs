@@ -1,6 +1,8 @@
 using Assets.Scripts.Refactoring.Architecture;
+using Assets.Scripts.Refactoring.Controller.Player.FSM.Player_States.Sub_States;
 using Assets.Scripts.Refactoring.Controller.Weapon;
 using Assets.Scripts.Refactoring.Model.Player;
+using Assets.Scripts.Refactoring.System.Battle_System;
 using QFramework;
 using System;
 using System.Collections;
@@ -9,7 +11,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Refactoring {
-    public class PlayerController : MonoBehaviour, IController {
+    public class PlayerController : MonoBehaviour, IController, IDamageable {
 
         public Animator mAnimator { get; private set; }
         public Rigidbody2D mRigidbody { get; private set; }
@@ -29,6 +31,8 @@ namespace Assets.Scripts.Refactoring {
 
         public int amountOfJump = 1;
 
+        public float DeathFadeTime = 0.5f;
+
         private void Awake() {
             InitializeComponent();
             InitializeFSM();
@@ -42,7 +46,11 @@ namespace Assets.Scripts.Refactoring {
             mCore.InitCore(transform);
 
             weaponController = GetComponentInChildren<WeaponController>();
+
+            this.GetModel<IPlayerModel>().RegisterPlayer(transform);
         }
+
+        #region FSM
 
         private void InitializeFSM() {
             RegisterState(new PlayerIdleState("idle"));
@@ -55,6 +63,7 @@ namespace Assets.Scripts.Refactoring {
             RegisterState(new PlayerEdgeState("edgeClimbState"));
             RegisterState(new PlayerWallJumpState("inAir"));
             RegisterState(new PlayerAttackState("attack"));
+            RegisterState(new PlayerHurtState("hurt"));
         }
 
 
@@ -68,7 +77,7 @@ namespace Assets.Scripts.Refactoring {
         public TState GetState<TState>() where TState : PlayerState {
             return mStateDic.Get<TState>();
         }
-
+        #endregion
 
         void Start() {
             StateMachine.Initialize(GetState<PlayerIdleState>());
@@ -80,6 +89,10 @@ namespace Assets.Scripts.Refactoring {
 
 
         private void Update() {
+            if (Input.GetKeyDown(KeyCode.K)) {
+                this.GetModel<IPlayerModel>().Health.Value -= 1;
+            }
+
             CurrentVelocity = mRigidbody.velocity;
 
             StateMachine.CurrentState.OnUpdate();
@@ -137,6 +150,37 @@ namespace Assets.Scripts.Refactoring {
             WorkSpace.Set(transform.position.x + xdis, mCore.Sense.edgeCheckTrans.position.y - ydis);
 
             return WorkSpace;
+        }
+
+        public void Die() {
+            mCore.Die(() => {
+                StartCoroutine(deathFade(DeathFadeTime));
+            });
+        }
+
+        IEnumerator deathFade(float fadeTime) {
+            Color color = GetComponent<SpriteRenderer>().color;
+            while (fadeTime > 0) {
+                color.a -= fadeTime / Time.deltaTime;
+                fadeTime -= Time.deltaTime;
+                yield return null;
+            }
+            Destroy(gameObject);
+        }
+
+        public void Hurt(Action<IController> callback) {
+            if (IsOnHurt())
+                return;
+            mCore.Hurt();
+            callback?.Invoke(this);
+        }
+
+        public bool IsOnHurt() {
+            return mCore.IsHurt;
+        }
+
+        public Transform getHitTransform() {
+            return transform;
         }
 
         public IArchitecture GetArchitecture() {

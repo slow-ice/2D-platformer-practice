@@ -55,5 +55,9 @@ namespace Assets.Scripts.Refactoring.Controller.Enemy.Base.FSM {
         protected TState GetState<TState>() where TState : EnemyState {
             return controller.GetState<TState>();
         }
+
+        protected TController GetController<TController>(EnemyController controller) where TController : EnemyController {
+            return (TController)controller;
+        }
     }
 }

@@ -28,6 +28,8 @@ namespace Assets.Scripts.Refactoring.Model.Enemy {
         public float attackCoolDown = 0.5f;
         public float detectDistance = 3f;
         public float attackRange = 1f;
+        public int normalAttackDamage = 1;
+        public int heavyAttackDamage = 2;
 
         [Header("Attributes")]
         public int maxHealthPoint;

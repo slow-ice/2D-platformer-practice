@@ -15,12 +15,14 @@ public class PlayerWallJumpState : PlayerAbilityState {
         controller.GetState<PlayerInAirState>().SetIsWallJumping();
 
         core.Flip();
-        WaitTimeManager.WaitTime(0.3f, () => isAbilityDone = true);
+        WaitTimeManager.WaitTime(controller.PlayerData.wallJumpTimer, () => isAbilityDone = true);
     }
 
     public override void OnUpdate() {
         base.OnUpdate();
 
+        controller.mAnimator.SetFloat("xVelocity", controller.CurrentVelocity.x);
+        controller.mAnimator.SetFloat("yVelocity", controller.CurrentVelocity.y);
     }
 
     //IEnumerator jumpDelay(float delay) {

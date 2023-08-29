@@ -76,6 +76,10 @@ namespace Assets.Scripts.Refactoring.System.Input_System {
             inputActions.Enable();
         }
 
+        public void DisableInput() {
+            inputActions.Disable();
+        }
+
         private void ResetSecondAttack(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
             AttackInputs[(int)CombatInputs.Secondary] = false;
 
