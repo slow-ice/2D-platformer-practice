@@ -8,9 +8,13 @@ namespace Assets.Scripts.Refactoring.Model.Weapon {
         [SerializeField]
         private WeaponData_SO weaponData_;
 
+        private void Awake() {
+            weaponData = weaponData_;
+        }
+
         void Start() {
             weaponData = weaponData_;
-            GetComponent<WeaponController>().SetWeapon(this);
+            //GetComponent<WeaponController>().SetWeapon(this);
         }
 
         public void RegisterAttackAction() {

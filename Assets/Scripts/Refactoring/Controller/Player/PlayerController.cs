@@ -81,8 +81,6 @@ namespace Assets.Scripts.Refactoring {
 
         void Start() {
             StateMachine.Initialize(GetState<PlayerIdleState>());
-
-            this.GetModel<IPlayerModel>().RegisterPlayer(transform);
             
             GetState<PlayerAttackState>().SetWeaponController(weaponController);
         }

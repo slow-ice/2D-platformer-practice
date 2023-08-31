@@ -32,12 +32,7 @@ namespace Assets.Scripts.Refactoring.Model.Player {
         public PlayerData_SO PlayerData { get; private set; }
 
         protected override void OnInit() {
-            Health.RegisterWithInitValue(newValue => {
-                Debug.Log("Player Current Health: " + newValue);
-                if (newValue <= 0) {
-                    this.SendEvent<PlayerDieEvent>();
-                }
-            });
+            
         }
 
         public void RegisterPlayer(Transform transform) {
@@ -46,6 +41,16 @@ namespace Assets.Scripts.Refactoring.Model.Player {
             Animator = transform.GetComponent<Animator>();
             Rigidbody = transform.GetComponent<Rigidbody2D>();
             PlayerData = Controller.PlayerData;
+            Health.Value = PlayerData.health;
+
+            Health.RegisterWithInitValue(newValue => {
+                Debug.Log("Player Current Health: " + newValue);
+                this.SendEvent<PlayerHpChangeEvent>(new PlayerHpChangeEvent(newValue, PlayerData.health));
+                if (newValue <= 0) {
+                    this.SendEvent<PlayerDieEvent>();
+                }
+
+            });
         }
     }
 }

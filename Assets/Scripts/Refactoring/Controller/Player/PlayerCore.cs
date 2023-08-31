@@ -49,10 +49,12 @@ public class PlayerCore : IController
     //    return Physics2D.OverlapCircle(GroundCheck.position, PlayerData.GroundCheckRadius, PlayerData.GroundLayer);
     //}
 
-    public void CheckShouldFlip(int xInput) {
+    public bool CheckShouldFlip(int xInput) {
         if (xInput != 0 && xInput != FacingDirection) {
             Flip();
+            return true;
         }
+        return false;
     }
 
     public bool CheckAnimFinished(string animName) {

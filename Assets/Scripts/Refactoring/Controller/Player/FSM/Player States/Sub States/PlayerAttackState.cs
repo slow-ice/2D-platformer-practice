@@ -28,6 +28,10 @@ public class PlayerAttackState : PlayerAbilityState {
         controller.SetVelocityToZero(0);
         //stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
 
+        weaponController.gameObject.SetActive(true);
+
+        var data = weaponController.CurrentWeapon;
+
         if (attackCount >= 3) {
             attackCount = 0;
         }
@@ -55,6 +59,9 @@ public class PlayerAttackState : PlayerAbilityState {
             if (!changeToNext)
                 isAbilityDone = true;
 
+            if (core.CheckShouldFlip(InputManager.Instance.xInput)) 
+                controller.SetVelocityToZero(0);
+
             if (changeToNext) {
                 UseAttackInput();
                 stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
@@ -63,6 +70,8 @@ public class PlayerAttackState : PlayerAbilityState {
         else if (InputManager.Instance.Attack) {
             changeToNext = true;
         }
+
+        
     }
 
     public void UseAttackInput() {

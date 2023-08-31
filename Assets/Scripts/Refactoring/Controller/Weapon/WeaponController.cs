@@ -27,6 +27,7 @@ namespace Assets.Scripts.Refactoring.Controller.Weapon {
         }
 
         void Start() {
+            SetWeapon(GetComponent<IWeapon>());
             gameObject.SetActive(false);
             HitBox.enabled = false;
         }
@@ -36,19 +37,6 @@ namespace Assets.Scripts.Refactoring.Controller.Weapon {
                 DetectEnemy();
             }
         }
-
-        //private void LateUpdate() {
-        //    var pos = HitBox.offset + new Vector2(transform.position.x, transform.position.y);
-        //    var size = HitBox.size;
-        //    var leftDown = new Vector3(pos.x - size.x, pos.y - size.y);
-        //    var leftUp = new Vector3(pos.x - size.x, pos.y + size.y);
-        //    var rightDown = new Vector3(pos.x + size.x, pos.y - size.y);
-        //    var rightUp = new Vector3(pos.x + size.x, pos.y + size.y);
-        //    Debug.DrawLine(leftDown, leftUp);
-        //    Debug.DrawLine(rightDown, rightUp);
-        //    Debug.DrawLine(rightUp, leftUp);
-        //    Debug.DrawLine(leftDown, rightDown);
-        //}
 
         public void DetectEnemy() {
             var boxPos = HitBox.offset + new Vector2(transform.position.x, transform.position.y);
