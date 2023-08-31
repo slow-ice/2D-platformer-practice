@@ -35,7 +35,7 @@ public class PlayerAttackState : PlayerAbilityState {
         if (attackCount >= 3) {
             attackCount = 0;
         }
-        else if (lastAttackTime + (weaponController.CurrentWeapon.weaponData as SwordData_SO).attackCoyoteTime < Time.time) {
+        else if (lastAttackTime + (weaponController.CurrentWeapon as SwordData_SO).attackCoyoteTime < Time.time) {
             attackCount = 0;
         }
 
@@ -79,7 +79,7 @@ public class PlayerAttackState : PlayerAbilityState {
     }
 
     private void SetAttackMove() {
-        var speed = (weaponController.CurrentWeapon.weaponData as SwordData_SO).moveSpeedList[attackCount];
+        var speed = (weaponController.CurrentWeapon as SwordData_SO).moveSpeedList[attackCount];
         controller.SetVelocityX(speed * core.FacingDirection);
     }
 

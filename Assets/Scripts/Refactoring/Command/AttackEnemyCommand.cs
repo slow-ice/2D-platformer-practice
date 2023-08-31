@@ -28,7 +28,7 @@ namespace Assets.Scripts.Refactoring.Command {
         protected override void OnExecute() {
             //this.SendEvent(new EnemyHurtEvent(targetTrans, damage, IsHeavyHit));
             var controller = this.GetModel<IPlayerModel>().Controller;
-            var weaponData = controller.weaponController.CurrentWeapon.weaponData;
+            var weaponData = controller.weaponController.CurrentWeapon;
             var state = controller.StateMachine.CurrentState as PlayerAttackState;
             if (state.IsLastHit()) {
                 controller.StartCoroutine(CameraShake(0.5f));

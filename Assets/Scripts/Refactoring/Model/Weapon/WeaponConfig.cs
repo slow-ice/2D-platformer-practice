@@ -8,7 +8,6 @@ namespace Assets.Scripts.Refactoring.Model.Weapon {
     
     public interface IWeapon {
         void RegisterAttackAction();
-        WeaponData_SO weaponData { get; }
     }
 
     [CreateAssetMenu(fileName = "Sword Data", menuName = "Player/Data/Weapon")]
@@ -18,5 +17,7 @@ namespace Assets.Scripts.Refactoring.Model.Weapon {
 
         [Header("Move Speed List")]
         public List<float> moveSpeedList = new();
+
+        
     }
 }

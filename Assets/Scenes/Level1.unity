@@ -9113,7 +9113,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472543384613606}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cf917006d452744da17501019252719, type: 3}
   m_Name: 
@@ -10113,5 +10113,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1142879683, guid: 6a65f8940b6d3524eab57d2bf8317344, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6a65f8940b6d3524eab57d2bf8317344, type: 3}

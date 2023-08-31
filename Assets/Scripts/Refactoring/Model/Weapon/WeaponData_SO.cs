@@ -11,13 +11,11 @@ namespace Assets.Scripts.Refactoring.Model.Weapon {
             Sword, Bow
         }
 
-        [Header("Animation")]
-        public List<TwinAnimList> animList = new ();
-        [Serializable]
-        public struct TwinAnimList {
-            public string baseAnim;
-            public string bodyAnim;
-        }
+        [Header("Weapon Looks")]
+        public List<Sprite> weaponSprites = new();
+
+        [Header("Weapon Attack Animation")]
+        public List<AnimationClip> weaponAnimations = new();
 
         [Header("Damage")]
         public int NormalDamage = 1;

@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Assets.Scripts.Refactoring.Controller.Weapon {
     public class WeaponController : MonoBehaviour, IController {
 
-        public IWeapon CurrentWeapon { get; private set; }
+        public WeaponData_SO CurrentWeapon { get; private set; }
         private WeaponData_SO weaponData;
 
         private Animator mBaseAnimator;
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Refactoring.Controller.Weapon {
         }
 
         void Start() {
-            SetWeapon(GetComponent<IWeapon>());
+            //SetWeapon(GetComponent<IWeapon>());
             gameObject.SetActive(false);
             HitBox.enabled = false;
         }
@@ -63,9 +63,9 @@ namespace Assets.Scripts.Refactoring.Controller.Weapon {
         public void PlayAnim(int attackIndex) {
             gameObject.SetActive(true);
             HitBox.enabled = true;
-            var anim = weaponData.animList[attackIndex];
-            mBaseAnimator.Play(anim.baseAnim);
-            mBodyAnimator.Play(anim.bodyAnim);
+            //var anim = weaponData.animList[attackIndex];
+            //mBaseAnimator.Play(anim.baseAnim);
+            //mBodyAnimator.Play(anim.bodyAnim);
         }
 
         public void StopAnim() {
@@ -84,10 +84,10 @@ namespace Assets.Scripts.Refactoring.Controller.Weapon {
 
         #endregion
 
-        public void SetWeapon(IWeapon weapon) {
-            CurrentWeapon = weapon;
-            weaponData = weapon.weaponData;
-        }
+        //public void SetWeapon(IWeapon weapon) {
+        //    CurrentWeapon = weapon;
+        //    weaponData = weapon.weaponData;
+        //}
 
         public IArchitecture GetArchitecture() {
             return GameCenter.Interface;
