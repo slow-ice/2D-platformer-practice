@@ -74,11 +74,13 @@ namespace Assets.Scripts.Refactoring {
                 value => value.collider != null
                 );
 
-            EdgeCheck = new SenseProperty<RaycastHit2D>(
-                () => Physics2D.Raycast(edgeCheckTrans.position, Vector2.right * transform.localScale.x,
-                    CharacterData.WallCheckDistance, LayerMask.GetMask("Ground")),
-                value => value.collider != null
-                );
+            if (edgeCheckTrans != null) {
+                EdgeCheck = new SenseProperty<RaycastHit2D>(
+                    () => Physics2D.Raycast(edgeCheckTrans.position, Vector2.right * transform.localScale.x,
+                        CharacterData.WallCheckDistance, LayerMask.GetMask("Ground")),
+                    value => value.collider != null
+                    );
+            }
         }
 
         public SenseController SetPlayer(PlayerController player) {

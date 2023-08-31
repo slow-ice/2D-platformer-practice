@@ -77,9 +77,9 @@ public class PlayerInAirState : PlayerState {
         }
 
         if (isTouchingWall && !isTouchingEdge) {
-            controller.GetState<PlayerEdgeState>().SetDetectedPos(controller.transform.position);
-            stateMachine.ChangeState(controller.GetState<PlayerEdgeState>());
-            return;
+            //controller.GetState<PlayerEdgeState>().SetDetectedPos(controller.transform.position);
+            //stateMachine.ChangeState(controller.GetState<PlayerEdgeState>());
+            //return;
         }
 
         if (isTouchingWall && controller.CurrentVelocity.y < 0f && xInput == core.FacingDirection) {

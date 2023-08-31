@@ -9,8 +9,13 @@ using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Refactoring {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(SenseController))]
     public class PlayerController : MonoBehaviour, IController, IDamageable {
 
         public Animator mAnimator { get; private set; }
@@ -60,7 +65,7 @@ namespace Assets.Scripts.Refactoring {
             RegisterState(new PlayerInAirState("inAir"));
             RegisterState(new PlayerDashState("inAir"));
             RegisterState(new PlayerWallSlideState("wallSlide"));
-            RegisterState(new PlayerEdgeState("edgeClimbState"));
+            //RegisterState(new PlayerEdgeState("edgeClimbState"));
             RegisterState(new PlayerWallJumpState("inAir"));
             RegisterState(new PlayerAttackState("attack"));
             RegisterState(new PlayerHurtState("hurt"));

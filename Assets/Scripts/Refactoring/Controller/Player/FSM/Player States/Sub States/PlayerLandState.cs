@@ -33,7 +33,7 @@ public class PlayerLandState : PlayerGroundState {
             controller.SetVelocityToZero(0);
         }
 
-        if (core.CheckAnimFinished(animName)) {
+        if (core.IsCurrentAnimOver()) {
             stateMachine.ChangeState(controller.GetState<PlayerIdleState>());
         }
     }

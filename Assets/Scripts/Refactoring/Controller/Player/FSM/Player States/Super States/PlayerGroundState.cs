@@ -46,18 +46,18 @@ public class PlayerGroundState : PlayerState {
         jumpInput = InputManager.Instance.JumpInput;
         dashInput = InputManager.Instance.DashInput;
 
-        if (InputManager.Instance.AttackInputs[(int)CombatInputs.Primary]) {
-            isStateOver = true;
-            controller.GetState<PlayerAttackState>().UseAttackInput();
-            stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
-            return;
-        }
+        //if (InputManager.Instance.AttackInputs[(int)CombatInputs.Primary]) {
+        //    isStateOver = true;
+        //    controller.GetState<PlayerAttackState>().UseAttackInput();
+        //    stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
+        //    return;
+        //}
 
-        if (InputManager.Instance.AttackInputs[(int)(CombatInputs.Secondary)]) {
-            isStateOver = true;
-            stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
-            return;
-        }
+        //if (InputManager.Instance.AttackInputs[(int)(CombatInputs.Secondary)]) {
+        //    isStateOver = true;
+        //    stateMachine.ChangeState(controller.GetState<PlayerAttackState>());
+        //    return;
+        //}
 
         if (core.IsHurt) {
             stateMachine.ChangeState(controller.GetState<PlayerHurtState>());
